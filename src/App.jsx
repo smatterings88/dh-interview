@@ -16,6 +16,7 @@ import BuyerWelcome from './components/BuyerWelcome';
 import NonBuyerClose from './components/NonBuyerClose';
 import { questions } from './utils/questions';
 import { acknowledgments } from './utils/acknowledgments';
+import { processQuestionAnswer } from './utils/ghlApi';
 import './App.css';
 
 const SCREENS = {
@@ -73,7 +74,7 @@ function App() {
     setCurrentQuestionIndex(0); // Start with question 1 (Age)
   };
 
-  const handleQuestionAnswer = (value) => {
+  const handleQuestionAnswer = async (value) => {
     const questionId = questions[currentQuestionIndex].id;
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
@@ -86,6 +87,11 @@ function App() {
     // Also add acknowledgment tag if it exists
     if (acknowledgments[value]) {
       setTags(prev => [...prev, acknowledgments[value]]);
+    }
+
+    // Integrate with GHL - tag contact after each answer
+    if (userEmail) {
+      processQuestionAnswer(userEmail, questionId, value);
     }
 
     // Determine next screen based on question index
@@ -136,9 +142,18 @@ function App() {
       }, 800);
     } else if (currentQuestionIndex === 9) {
       // After question 10 (Frequency), show micro-pause
-      setTimeout(() => {
+      setTimeout(async () => {
         setCurrentScreen(SCREENS.MICRO_PAUSE);
         setTags(prev => [...prev, 'interview-complete']);
+        
+        // Tag interview complete in GHL
+        if (userEmail) {
+          const { getOrCreateContact, addTagToContact } = await import('./utils/ghlApi');
+          const contact = await getOrCreateContact(userEmail);
+          if (contact?.id) {
+            await addTagToContact(contact.id, 'dh_checkin --> interview-complete');
+          }
+        }
       }, 800);
     }
   };
@@ -199,22 +214,39 @@ function App() {
     setCurrentScreen(SCREENS.NON_BUYER_CLOSE);
   };
 
-  const handleOfferJoin = (type) => {
-    if (type === 'annual') {
-      setTags(prev => [...prev, 'hs-annual']);
-    } else {
-      setTags(prev => [...prev, 'hs-monthly']);
+  const handleOfferJoin = async (type) => {
+    const tag = type === 'annual' ? 'hs-annual' : 'hs-monthly';
+    setTags(prev => [...prev, tag]);
+    
+    // Tag in GHL
+    if (userEmail) {
+      const { getOrCreateContact, addTagToContact } = await import('./utils/ghlApi');
+      const contact = await getOrCreateContact(userEmail);
+      if (contact?.id) {
+        await addTagToContact(contact.id, `dh_checkin --> ${tag}`);
+      }
     }
+    
     setCurrentScreen(SCREENS.BUYER_WELCOME);
   };
 
-  const handleOfferDecline = () => {
+  const handleOfferDecline = async () => {
     if (currentScreen === SCREENS.OFFER_ANNUAL) {
       // Show monthly downsell
       setCurrentScreen(SCREENS.OFFER_MONTHLY);
     } else {
       // Declined monthly too
       setTags(prev => [...prev, 'hs-declined']);
+      
+      // Tag in GHL
+      if (userEmail) {
+        const { getOrCreateContact, addTagToContact } = await import('./utils/ghlApi');
+        const contact = await getOrCreateContact(userEmail);
+        if (contact?.id) {
+          await addTagToContact(contact.id, 'dh_checkin --> hs-declined');
+        }
+      }
+      
       setCurrentScreen(SCREENS.NON_BUYER_CLOSE);
     }
   };
