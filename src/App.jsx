@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EntryScreen from './components/EntryScreen';
+import EmailScreen from './components/EmailScreen';
 import QuestionScreen from './components/QuestionScreen';
 import TransitionScreen from './components/TransitionScreen';
 import MirrorA from './components/MirrorA';
@@ -19,6 +20,7 @@ import './App.css';
 
 const SCREENS = {
   ENTRY: 'entry',
+  EMAIL: 'email',
   QUESTION: 'question',
   TRANSITION_TO_EMOTIONAL: 'transition_to_emotional',
   MIRROR_A: 'mirror_a',
@@ -41,8 +43,32 @@ function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [tags, setTags] = useState([]);
   const [alexResponse, setAlexResponse] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
+
+  // Read "vip" query parameter on mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const vipEmail = urlParams.get('vip');
+    
+    if (vipEmail) {
+      setUserEmail(vipEmail);
+      console.log('Email from query string (vip parameter):', vipEmail);
+    }
+  }, []);
 
   const handleEntryContinue = () => {
+    // If no email from query param, show email screen first
+    if (!userEmail) {
+      setCurrentScreen(SCREENS.EMAIL);
+    } else {
+      setCurrentScreen(SCREENS.QUESTION);
+      setCurrentQuestionIndex(0); // Start with question 1 (Age)
+    }
+  };
+
+  const handleEmailSubmit = (email) => {
+    setUserEmail(email);
+    console.log('Email from user input:', email);
     setCurrentScreen(SCREENS.QUESTION);
     setCurrentQuestionIndex(0); // Start with question 1 (Age)
   };
@@ -204,6 +230,9 @@ function App() {
       case SCREENS.ENTRY:
         return <EntryScreen onContinue={handleEntryContinue} />;
 
+      case SCREENS.EMAIL:
+        return <EmailScreen onEmailSubmit={handleEmailSubmit} />;
+
       case SCREENS.QUESTION:
         return (
           <QuestionScreen
@@ -297,7 +326,7 @@ function App() {
           borderRadius: '4px',
           zIndex: 9999
         }}>
-          Screen: {currentScreen} | Q: {currentQuestionIndex + 1}/{questions.length} | Tags: {tags.length}
+          Screen: {currentScreen} | Q: {currentQuestionIndex + 1}/{questions.length} | Tags: {tags.length} | Email: {userEmail || 'none'}
         </div>
       )}
     </div>

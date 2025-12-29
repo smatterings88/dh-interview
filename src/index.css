@@ -285,6 +285,35 @@ button:disabled {
   animation: fadeIn 300ms ease-in 3s forwards;
 }
 
+/* Email Input */
+.email-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  border: 1px solid var(--text-primary);
+  background-color: transparent;
+  color: var(--text-primary);
+  border-radius: 0;
+  transition: opacity var(--transition-fade);
+}
+
+.email-input:focus {
+  outline: none;
+  opacity: 0.8;
+}
+
+.email-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.email-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
 /* Utility classes */
 .mt-auto {
   margin-top: auto;
