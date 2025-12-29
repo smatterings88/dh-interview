@@ -1,0 +1,11 @@
+/* Additional screen-specific styles if needed */
+.selected {
+  background-color: var(--bg-secondary);
+  opacity: 0.8;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+
