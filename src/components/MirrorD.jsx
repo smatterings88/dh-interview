@@ -1,15 +1,6 @@
-import { useEffect } from 'react';
 import './Screen.css';
 
 export default function MirrorD({ answers, onComplete }) {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onComplete();
-    }, 2500); // 2.5 second hold
-
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
   // Check if user selected guilt / phone / avoidance
   // Question 8 (id: 8) = Energy & Rest
   const hasRestIssues = 
@@ -31,6 +22,9 @@ export default function MirrorD({ answers, onComplete }) {
             {line}
           </p>
         ))}
+        <button className="btn-primary mt-24" onClick={onComplete}>
+          Continue
+        </button>
       </div>
     </div>
   );

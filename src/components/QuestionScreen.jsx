@@ -22,6 +22,9 @@ export default function QuestionScreen({ question, onAnswer, autoAdvanceDelay = 
     }, autoAdvanceDelay);
   };
 
+  // Check if this is the first emotional question (id: 3)
+  const isFirstEmotionalQuestion = question.id === 3;
+
   return (
     <div className="screen-container">
       <div className="screen-content">
@@ -30,7 +33,12 @@ export default function QuestionScreen({ question, onAnswer, autoAdvanceDelay = 
           <p className="text-secondary mt-16">{question.subtext}</p>
         )}
         {question.question && (
-          <p className="text-medium mt-16">{question.question}</p>
+          <p className="question-text mt-16">{question.question}</p>
+        )}
+        {isFirstEmotionalQuestion && (
+          <p className="text-secondary mt-12" style={{ fontSize: '0.9rem', fontStyle: 'italic' }}>
+            There's no right answer. Just choose what fits.
+          </p>
         )}
         <div className="question-options">
           {question.options.map((option) => (

@@ -313,6 +313,7 @@ function App() {
             frequency={answers[10]}
             onJoin={handleOfferJoin}
             onDecline={handleOfferDecline}
+            answers={answers}
           />
         );
 
@@ -323,6 +324,7 @@ function App() {
             frequency={answers[10]}
             onJoin={handleOfferJoin}
             onDecline={handleOfferDecline}
+            answers={answers}
           />
         );
 

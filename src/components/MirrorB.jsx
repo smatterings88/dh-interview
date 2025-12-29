@@ -1,15 +1,6 @@
-import { useEffect } from 'react';
 import './Screen.css';
 
 export default function MirrorB({ answers, onComplete }) {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onComplete();
-    }, 3000); // 3 second hold
-
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
   // Check if user selected draining/looping/disappearing options
   // Question 4 (id: 4) = Mental Load (replaying, racing)
   // Question 5 (id: 5) = Social Energy (drained, withdraw)
@@ -35,6 +26,9 @@ export default function MirrorB({ answers, onComplete }) {
             {line}
           </p>
         ))}
+        <button className="btn-primary mt-24" onClick={onComplete}>
+          Continue
+        </button>
       </div>
     </div>
   );
