@@ -1,8 +1,8 @@
-import { getMirrorLines } from '../utils/acknowledgments';
+import { getFinalMirrorLines } from '../utils/acknowledgments';
 import './Screen.css';
 
 export default function MirrorScreen({ answers, onContinue }) {
-  const lines = getMirrorLines(answers);
+  const lines = getFinalMirrorLines(answers);
 
   return (
     <div className="screen-container" style={{ backgroundColor: 'var(--bg-secondary)' }}>

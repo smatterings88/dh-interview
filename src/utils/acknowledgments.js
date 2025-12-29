@@ -105,4 +105,37 @@ export const getMirrorLines = (answers) => {
   return lines.slice(0, 3);
 };
 
+// Final mirror result lines (choose 2-3 max based on answers)
+// Question IDs: 1=Current State, 2=Mental Load, 4=Emotional Aftereffect, 5=Self-Relationship, 6=Energy & Rest
+export const getFinalMirrorLines = (answers) => {
+  const lines = [];
+  
+  // Check for masking (Question 1, id: 1)
+  if (answers[1] === 'masking') {
+    lines.push("You've gotten really good at looking fine.");
+    lines.push("Most people don't see how much you're carrying.");
+  }
+  
+  // Check for looping/replaying (Question 4, id: 4 OR Question 2, id: 2)
+  if (answers[4] === 'looping' || answers[2] === 'replaying') {
+    lines.push("Your mind doesn't just process things.");
+    lines.push("It replays them.");
+  }
+  
+  // Check for rest issues (Question 6, id: 6)
+  if (answers[6] === 'guilt_rest' || answers[6] === 'numb' || answers[6] === 'avoid_thoughts') {
+    lines.push("Rest doesn't always feel like rest.");
+    lines.push("It feels like something you have to justify.");
+  }
+  
+  // Check for unworthy (Question 5, id: 5)
+  if (answers[5] === 'unworthy' || answers[5] === 'deflect') {
+    lines.push("You have a hard time believing kind things about yourself.");
+    lines.push("Not because they aren't true — but because you don't trust them yet.");
+  }
+  
+  // Return 2-3 pairs max (4-6 lines of text)
+  return lines.slice(0, 6);
+};
+
 

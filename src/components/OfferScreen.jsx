@@ -18,7 +18,10 @@ export default function OfferScreen({
               </p>
               <p>
                 The Daily Hug comes once.
-                Hug Society shows up morning and evening — and gives you access to Alex anytime in between.
+              </p>
+              <p>
+                Hug Society shows up morning and evening —
+                and Alex is there whenever your thoughts start looping.
               </p>
             </div>
           )}
@@ -26,7 +29,7 @@ export default function OfferScreen({
             <p className="text-medium">What you get</p>
             <ul className="feature-list">
               <li>Morning + Evening Hugs</li>
-              <li>Alex, anytime you need to talk</li>
+              <li>Alex, anytime</li>
               <li>A place you don't have to explain yourself</li>
             </ul>
             <p className="mt-24">
@@ -66,15 +69,14 @@ export default function OfferScreen({
         <div className="screen-content">
           <h2>Not ready for the yearly plan?</h2>
           <div className="offer-content">
-            <p>Totally fair.</p>
+            <p>That's okay.</p>
             <p className="mt-16">
-              If you want to try Hug Society without committing for the year, you can start monthly.
+              If you want to try Hug Society without committing for the year,
+              you can start monthly.
             </p>
             <p className="mt-16">
-              This works best when it's given a little time to settle in — so the monthly option has a 3-month minimum.
-            </p>
-            <p className="mt-16">
-              That gives the support time to actually do what it's meant to do.
+              This works best when it's given a little time to settle in —
+              so the monthly option has a 3-month minimum.
             </p>
             <p className="text-medium mt-24">You'll get:</p>
             <ul className="feature-list">
@@ -83,13 +85,10 @@ export default function OfferScreen({
               <li>The same experience as the yearly plan</li>
             </ul>
             <div className="price mt-24">
-              $15 per month
+              $15 / month
             </div>
             <p className="text-secondary text-small">
               (3-month minimum)
-            </p>
-            <p className="text-secondary text-small mt-16">
-              Most people switch to the yearly plan once they feel the difference.
             </p>
           </div>
           <div className="question-options mt-24">

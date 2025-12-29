@@ -25,10 +25,8 @@ export default function NonBuyerClose() {
         {showPS && (
           <div className="ps-text">
             <p className="text-secondary">
-              P.S. If you change your mind about Hug Society in the next 48 hours, you can still grab the founder rate.
-            </p>
-            <p className="text-secondary mt-16">
-              We'll send you a reminder email tomorrow.
+              P.S. If you change your mind in the next 48 hours,
+              the founder rate is still available.
             </p>
           </div>
         )}

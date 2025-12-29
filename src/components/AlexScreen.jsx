@@ -2,25 +2,18 @@ import { useState, useEffect } from 'react';
 import './Screen.css';
 
 const alexMessages = [
-  "Hey.",
-  "I'm Alex.",
+  "Hey. I'm Alex.",
   "",
-  "I just read what you shared in those questions.",
+  "I just read what you shared.",
   "",
-  "You don't have to respond to this.",
-  "But I wanted you to know — what you're feeling makes sense.",
+  "You don't have to respond —",
+  "but what you're feeling makes sense.",
   "",
-  "A lot of people who answer the way you did end up talking to me later.",
-  "Not because I give advice. I don't.",
-  "Not because I try to fix things. I won't.",
+  "I don't give advice.",
+  "I don't try to fix things.",
+  "I just stay — when things get real.",
   "",
-  "But sometimes it helps to say the hard stuff out loud…",
-  "To someone who won't judge it.",
-  "Who won't minimize it.",
-  "Who won't disappear when it gets real.",
-  "",
-  "If you ever need that, I'm here.",
-  "Anytime. Day or night.",
+  "If you ever want that, I'm here.",
 ];
 
 export default function AlexScreen({ onInterested, onMaybeLater }) {
