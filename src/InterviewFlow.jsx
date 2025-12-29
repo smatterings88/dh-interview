@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import EntryScreen from './components/EntryScreen';
 import EmailScreen from './components/EmailScreen';
 import QuestionScreen from './components/QuestionScreen';
@@ -38,7 +39,8 @@ const SCREENS = {
   NON_BUYER_CLOSE: 'non_buyer_close',
 };
 
-function App() {
+function InterviewFlow() {
+  const navigate = useNavigate();
   const [currentScreen, setCurrentScreen] = useState(SCREENS.ENTRY);
   const [answers, setAnswers] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -143,8 +145,21 @@ function App() {
     } else if (currentQuestionIndex === 9) {
       // After question 10 (Frequency), show micro-pause
       setTimeout(async () => {
+        const newTags = [...tags, 'interview-complete'];
+        setTags(newTags);
+        
+        // Save user data to localStorage with updated answers
+        const finalAnswers = { ...answers, [questionId]: value };
+        const userData = {
+          answers: finalAnswers,
+          tags: newTags,
+          userEmail,
+          frequency: value
+        };
+        localStorage.setItem('dh_userData', JSON.stringify(userData));
+        setAnswers(finalAnswers);
+        
         setCurrentScreen(SCREENS.MICRO_PAUSE);
-        setTags(prev => [...prev, 'interview-complete']);
         
         // Tag interview complete in GHL
         if (userEmail) {
@@ -191,16 +206,37 @@ function App() {
     setCurrentScreen(SCREENS.ALEX);
   };
 
-  const handleAlexInterested = () => {
+  const handleAlexInterested = async () => {
     setAlexResponse('interested');
-    setTags(prev => [...prev, 'alex-interested']);
-    // Show offer if frequency is more than once a day
+    const newTags = [...tags, 'alex-interested'];
+    setTags(newTags);
+    
+    // Tag in GHL
+    if (userEmail) {
+      const { getOrCreateContact, addTagToContact } = await import('./utils/ghlApi');
+      const contact = await getOrCreateContact(userEmail);
+      if (contact?.id) {
+        await addTagToContact(contact.id, 'dh_checkin --> alex-interested');
+      }
+    }
+    
+    // Check if user should see offer page (freq_twice, freq_multi, or alex-interested)
     const frequency = answers[10];
-    if (frequency === 'freq_twice' || frequency === 'freq_multi') {
-      setCurrentScreen(SCREENS.OFFER_ANNUAL);
+    const shouldShowOffer = frequency === 'freq_twice' || frequency === 'freq_multi' || true; // Always show offer if alex-interested
+    
+    if (shouldShowOffer) {
+      // Save user data and navigate to offer page
+      const userData = {
+        answers,
+        tags: newTags,
+        userEmail,
+        frequency: frequency
+      };
+      localStorage.setItem('dh_userData', JSON.stringify(userData));
+      navigate('/offer', { state: userData });
     } else {
-      // Still show offer but with different messaging
-      setCurrentScreen(SCREENS.OFFER_ANNUAL);
+      // Fallback - shouldn't happen
+      setCurrentScreen(SCREENS.DAILY_HUG_CONFIRM);
     }
   };
 
@@ -306,27 +342,11 @@ function App() {
       case SCREENS.DAILY_HUG_CONFIRM:
         return <DailyHugConfirmation onContinue={handleDailyHugConfirm} />;
 
+      // Offer screens are now handled by routing - these cases shouldn't be reached
       case SCREENS.OFFER_ANNUAL:
-        return (
-          <OfferScreen
-            isAnnual={true}
-            frequency={answers[10]}
-            onJoin={handleOfferJoin}
-            onDecline={handleOfferDecline}
-            answers={answers}
-          />
-        );
-
       case SCREENS.OFFER_MONTHLY:
-        return (
-          <OfferScreen
-            isAnnual={false}
-            frequency={answers[10]}
-            onJoin={handleOfferJoin}
-            onDecline={handleOfferDecline}
-            answers={answers}
-          />
-        );
+        // Fallback - shouldn't happen with routing
+        return null;
 
       case SCREENS.BUYER_WELCOME:
         return (
@@ -367,4 +387,4 @@ function App() {
   );
 }
 
-export default App;
+export default InterviewFlow;
