@@ -143,7 +143,8 @@ export default function AnnualOfferPage() {
 
         {/* Fast-Action Bonuses */}
         <div className="offer-content mt-32">
-          <p className="text-medium">Join in the next 48 hours and you'll also receive:</p>
+          <p className="text-medium">If you join in the <strong>next 48 hours</strong>, you'll also receive:</p>
+          <p className="mt-16">Because support doesn't only matter in the morning.</p>
           <ul className="feature-list mt-16">
             <li><strong>30-Day Midday Thrive Hug</strong> (normally $49)<br />
               <span className="text-secondary" style={{ fontSize: '16px' }}>Your midday reset — delivered when energy dips and stress creeps in.</span>
@@ -207,8 +208,11 @@ export default function AnnualOfferPage() {
 
         {/* Year-End Line */}
         <div className="offer-content mt-32 text-center">
-          <p className="text-secondary" style={{ fontSize: '16px', fontStyle: 'italic' }}>
-            Nothing to fix. Just a place to land — especially heading into a new year.
+          <p className="text-secondary" style={{ fontSize: '16px' }}>
+            That's okay. You'll keep receiving the Daily Hug either way.
+          </p>
+          <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
+            Hug Society will be here — especially if you want more support as the year turns.
           </p>
         </div>
       </div>

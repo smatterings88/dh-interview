@@ -32,7 +32,7 @@ export default function MonthlyOfferPage() {
     <div className="screen-container">
       <div className="screen-content">
         {/* Transition */}
-        <h2 className="text-medium">That's okay. Let's make this easier.</h2>
+        <h2 className="text-medium">That makes sense. Let's make this easier.</h2>
         <div className="offer-content mt-24">
           <p>Not everyone wants to decide for a full year right now.</p>
           <p className="mt-16">If you want to try Hug Society without committing long-term,</p>
@@ -63,9 +63,10 @@ export default function MonthlyOfferPage() {
           <div className="price" style={{ fontSize: '2rem', fontWeight: 600 }}>
             $15 per month
           </div>
-          <p className="mt-16">Hug Society works best when it's given a little time to settle in.</p>
-          <p className="mt-16">That's why the monthly option has a 3-month minimum —</p>
-          <p>so the support has a chance to actually do what it's meant to do.</p>
+          <p className="mt-16">Hug Society isn't designed to "work" in a few days.</p>
+          <p className="mt-16">It works when your nervous system has time to feel the rhythm of being supported —</p>
+          <p>morning, evening, and in between.</p>
+          <p className="mt-16">That's why the monthly option has a 3-month minimum.</p>
           <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
             (Same experience as the yearly plan. Just paid monthly.)
           </p>
@@ -77,8 +78,9 @@ export default function MonthlyOfferPage() {
           <p>You're just giving yourself a real window</p>
           <p>to feel what this support is like —</p>
           <p>instead of deciding after a few days.</p>
-          <p className="mt-16">Most people who start monthly eventually switch to the yearly plan</p>
-          <p>once they feel the difference.</p>
+          <p className="mt-16">Some people start monthly.</p>
+          <p className="mt-16">Then, once they feel what steady support actually does,</p>
+          <p>they choose to stay longer.</p>
         </div>
 
         {/* CTA */}
