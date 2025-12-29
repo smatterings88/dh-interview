@@ -52,7 +52,15 @@ export default function OfferScreen({
             </p>
           </div>
           <div className="question-options mt-24">
-            <button className="btn-primary" onClick={() => onJoin('annual')}>
+            <button 
+              className="btn-primary" 
+              onClick={async () => {
+                // Tag in GHL first
+                await onJoin('annual');
+                // Then redirect to checkout
+                window.location.href = 'https://dailyhug.com/order';
+              }}
+            >
               Join Hug Society — $97/year
             </button>
             <button className="btn-secondary mt-16" onClick={onDecline}>
@@ -92,7 +100,15 @@ export default function OfferScreen({
             </p>
           </div>
           <div className="question-options mt-24">
-            <button className="btn-primary" onClick={() => onJoin('monthly')}>
+            <button 
+              className="btn-primary" 
+              onClick={async () => {
+                // Tag in GHL first
+                await onJoin('monthly');
+                // Then redirect to checkout
+                window.location.href = 'https://dailyhug.com/order-monthly';
+              }}
+            >
               Try Hug Society — $15/month
             </button>
             <button className="btn-secondary mt-16" onClick={onDecline}>
