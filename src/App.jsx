@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import EntryScreen from './components/EntryScreen';
 import QuestionScreen from './components/QuestionScreen';
+import TransitionScreen from './components/TransitionScreen';
 import MirrorA from './components/MirrorA';
 import MirrorB from './components/MirrorB';
 import MirrorC from './components/MirrorC';
@@ -13,11 +14,13 @@ import OfferScreen from './components/OfferScreen';
 import BuyerWelcome from './components/BuyerWelcome';
 import NonBuyerClose from './components/NonBuyerClose';
 import { questions } from './utils/questions';
+import { acknowledgments } from './utils/acknowledgments';
 import './App.css';
 
 const SCREENS = {
   ENTRY: 'entry',
   QUESTION: 'question',
+  TRANSITION_TO_EMOTIONAL: 'transition_to_emotional',
   MIRROR_A: 'mirror_a',
   MIRROR_B: 'mirror_b',
   MIRROR_C: 'mirror_c',
@@ -41,7 +44,7 @@ function App() {
 
   const handleEntryContinue = () => {
     setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(0); // Start with question 1 (Current State)
+    setCurrentQuestionIndex(0); // Start with question 1 (Age)
   };
 
   const handleQuestionAnswer = (value) => {
@@ -49,49 +52,64 @@ function App() {
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
 
-    // Add tag for frequency question (used later for offer logic)
-    if (questionId === 8) {
-      setTags(prev => [...prev, value]);
+    // Add tag for each question answer
+    // Format: q{questionId}_{answerValue}
+    const questionTag = `q${questionId}_${value}`;
+    setTags(prev => [...prev, questionTag]);
+    
+    // Also add acknowledgment tag if it exists
+    if (acknowledgments[value]) {
+      setTags(prev => [...prev, acknowledgments[value]]);
     }
 
     // Determine next screen based on question index
     if (currentQuestionIndex === 0) {
-      // After question 1, show Mirror A
+      // After age question, continue to gender
+      setTimeout(() => {
+        setCurrentQuestionIndex(1);
+      }, 600);
+    } else if (currentQuestionIndex === 1) {
+      // After gender question, show transition to emotional questions
+      setTimeout(() => {
+        setCurrentScreen(SCREENS.TRANSITION_TO_EMOTIONAL);
+      }, 600);
+    } else if (currentQuestionIndex === 2) {
+      // After question 3 (Current State), show Mirror A
       setTimeout(() => {
         setCurrentScreen(SCREENS.MIRROR_A);
       }, 800);
-    } else if (currentQuestionIndex === 1) {
-      // After question 2, continue to question 3
-      setTimeout(() => {
-        setCurrentQuestionIndex(2);
-      }, 800);
-    } else if (currentQuestionIndex === 2) {
-      // After question 3, show Mirror B
-      setTimeout(() => {
-        setCurrentScreen(SCREENS.MIRROR_B);
-      }, 800);
     } else if (currentQuestionIndex === 3) {
-      // After question 4, continue to question 5
+      // After question 4 (Mental Load), continue to question 5
       setTimeout(() => {
         setCurrentQuestionIndex(4);
       }, 800);
     } else if (currentQuestionIndex === 4) {
-      // After question 5, show Mirror C
+      // After question 5 (Social Energy), show Mirror B
+      setTimeout(() => {
+        setCurrentScreen(SCREENS.MIRROR_B);
+      }, 800);
+    } else if (currentQuestionIndex === 5) {
+      // After question 6 (Emotional Aftereffect), continue to question 7
+      setTimeout(() => {
+        setCurrentQuestionIndex(6);
+      }, 800);
+    } else if (currentQuestionIndex === 6) {
+      // After question 7 (Self-Relationship), show Mirror C
       setTimeout(() => {
         setCurrentScreen(SCREENS.MIRROR_C);
       }, 800);
-    } else if (currentQuestionIndex === 5) {
-      // After question 6, show Mirror D
+    } else if (currentQuestionIndex === 7) {
+      // After question 8 (Energy & Rest), show Mirror D
       setTimeout(() => {
         setCurrentScreen(SCREENS.MIRROR_D);
       }, 800);
-    } else if (currentQuestionIndex === 6) {
-      // After question 7, continue to question 8
+    } else if (currentQuestionIndex === 8) {
+      // After question 9 (Support Style), continue to question 10
       setTimeout(() => {
-        setCurrentQuestionIndex(7);
+        setCurrentQuestionIndex(9);
       }, 800);
-    } else if (currentQuestionIndex === 7) {
-      // After question 8 (frequency), show micro-pause
+    } else if (currentQuestionIndex === 9) {
+      // After question 10 (Frequency), show micro-pause
       setTimeout(() => {
         setCurrentScreen(SCREENS.MICRO_PAUSE);
         setTags(prev => [...prev, 'interview-complete']);
@@ -99,24 +117,29 @@ function App() {
     }
   };
 
+  const handleTransitionToEmotionalComplete = () => {
+    setCurrentScreen(SCREENS.QUESTION);
+    setCurrentQuestionIndex(2); // Question 3 (Current State - first emotional question)
+  };
+
   const handleMirrorAComplete = () => {
     setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(1); // Question 2 (Mental Load)
+    setCurrentQuestionIndex(3); // Question 4 (Mental Load)
   };
 
   const handleMirrorBComplete = () => {
     setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(3); // Question 4 (Emotional Aftereffect)
+    setCurrentQuestionIndex(5); // Question 6 (Emotional Aftereffect)
   };
 
   const handleMirrorCContinue = () => {
     setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(5); // Question 6 (Energy & Rest)
+    setCurrentQuestionIndex(7); // Question 8 (Energy & Rest)
   };
 
   const handleMirrorDComplete = () => {
     setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(6); // Question 7 (Support Style)
+    setCurrentQuestionIndex(8); // Question 9 (Support Style)
   };
 
   const handleMicroPauseComplete = () => {
@@ -131,7 +154,7 @@ function App() {
     setAlexResponse('interested');
     setTags(prev => [...prev, 'alex-interested']);
     // Show offer if frequency is more than once a day
-    const frequency = answers[8];
+    const frequency = answers[10];
     if (frequency === 'freq_twice' || frequency === 'freq_multi') {
       setCurrentScreen(SCREENS.OFFER_ANNUAL);
     } else {
@@ -190,6 +213,9 @@ function App() {
           />
         );
 
+      case SCREENS.TRANSITION_TO_EMOTIONAL:
+        return <TransitionScreen onComplete={handleTransitionToEmotionalComplete} copy="Thanks. Let's check in." />;
+
       case SCREENS.MIRROR_A:
         return <MirrorA onComplete={handleMirrorAComplete} />;
 
@@ -223,7 +249,7 @@ function App() {
         return (
           <OfferScreen
             isAnnual={true}
-            frequency={answers[8]}
+            frequency={answers[10]}
             onJoin={handleOfferJoin}
             onDecline={handleOfferDecline}
           />
@@ -233,7 +259,7 @@ function App() {
         return (
           <OfferScreen
             isAnnual={false}
-            frequency={answers[8]}
+            frequency={answers[10]}
             onJoin={handleOfferJoin}
             onDecline={handleOfferDecline}
           />

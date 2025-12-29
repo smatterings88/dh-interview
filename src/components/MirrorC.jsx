@@ -2,11 +2,11 @@ import './Screen.css';
 
 export default function MirrorC({ answers, onContinue }) {
   // Check if user selected brush off / don't believe / awkward
-  // Question 5 (id: 5) = Self-Relationship
+  // Question 7 (id: 7) = Self-Relationship
   const hasRejectingOptions = 
-    answers[5] === 'deflect' || 
-    answers[5] === 'unworthy' || 
-    answers[5] === 'awkward';
+    answers[7] === 'deflect' || 
+    answers[7] === 'unworthy' || 
+    answers[7] === 'awkward';
 
   const firstCopy = hasRejectingOptions
     ? "You don't reject kindness out loud.\nYou just don't let it stay."

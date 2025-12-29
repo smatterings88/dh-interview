@@ -11,11 +11,11 @@ export default function MirrorD({ answers, onComplete }) {
   }, [onComplete]);
 
   // Check if user selected guilt / phone / avoidance
-  // Question 6 (id: 6) = Energy & Rest
+  // Question 8 (id: 8) = Energy & Rest
   const hasRestIssues = 
-    answers[6] === 'guilt_rest' || 
-    answers[6] === 'numb' || 
-    answers[6] === 'avoid_thoughts';
+    answers[8] === 'guilt_rest' || 
+    answers[8] === 'numb' || 
+    answers[8] === 'avoid_thoughts';
 
   const copy = hasRestIssues
     ? "Quiet can feel louder than noise.\nSo you keep moving."

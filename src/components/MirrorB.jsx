@@ -11,15 +11,15 @@ export default function MirrorB({ answers, onComplete }) {
   }, [onComplete]);
 
   // Check if user selected draining/looping/disappearing options
-  // Question 2 (id: 2) = Mental Load (replaying, racing)
-  // Question 3 (id: 3) = Social Energy (drained, withdraw)
-  // Question 4 (id: 4) = Emotional Aftereffect (looping)
+  // Question 4 (id: 4) = Mental Load (replaying, racing)
+  // Question 5 (id: 5) = Social Energy (drained, withdraw)
+  // Question 6 (id: 6) = Emotional Aftereffect (looping)
   const hasDrainingOptions = 
-    answers[2] === 'replaying' || 
-    answers[2] === 'racing' ||
-    answers[3] === 'drained' || 
-    answers[3] === 'withdraw' || 
-    answers[4] === 'looping';
+    answers[4] === 'replaying' || 
+    answers[4] === 'racing' ||
+    answers[5] === 'drained' || 
+    answers[5] === 'withdraw' || 
+    answers[6] === 'looping';
 
   const copy = hasDrainingOptions
     ? "It's not just what's happening.\nIt's how long you've been carrying it."

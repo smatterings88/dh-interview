@@ -1,6 +1,30 @@
 export const questions = [
   {
     id: 1,
+    headline: "Before we begin —",
+    subtext: "A little context helps us understand where you're coming from.",
+    question: "Which age range feels closest to you right now?",
+    options: [
+      { value: 'age_under25', label: "Under 25" },
+      { value: 'age_25_34', label: "25–34" },
+      { value: 'age_35_44', label: "35–44" },
+      { value: 'age_45_54', label: "45–54" },
+      { value: 'age_55_plus', label: "55+" },
+    ]
+  },
+  {
+    id: 2,
+    headline: "How do you describe yourself?",
+    subtext: "Only share what feels right.",
+    options: [
+      { value: 'gender_woman', label: "Woman" },
+      { value: 'gender_man', label: "Man" },
+      { value: 'gender_nonbinary', label: "Non-binary" },
+      { value: 'gender_noanswer', label: "Prefer not to say" },
+    ]
+  },
+  {
+    id: 3,
     headline: "Right now, which feels closest to true?",
     options: [
       { value: 'stretched', label: "I'm mostly okay, just a little stretched" },
@@ -11,7 +35,7 @@ export const questions = [
     ]
   },
   {
-    id: 2,
+    id: 4,
     headline: "How does your mind usually feel lately?",
     options: [
       { value: 'calm_surface', label: "Calm and steady" },
@@ -22,7 +46,7 @@ export const questions = [
     ]
   },
   {
-    id: 3,
+    id: 5,
     headline: "When you're around other people, what's most true?",
     options: [
       { value: 'social_ok', label: "Comfortable being myself" },
@@ -33,7 +57,7 @@ export const questions = [
     ]
   },
   {
-    id: 4,
+    id: 6,
     headline: "When something uncomfortable happens, what usually happens next?",
     options: [
       { value: 'resilient', label: "I move on quickly" },
@@ -44,7 +68,7 @@ export const questions = [
     ]
   },
   {
-    id: 5,
+    id: 7,
     headline: "When someone says something kind about you, what's your instinct?",
     options: [
       { value: 'receiving', label: "I take it in" },
@@ -55,7 +79,7 @@ export const questions = [
     ]
   },
   {
-    id: 6,
+    id: 8,
     headline: "When you finally get a quiet moment, what usually happens?",
     options: [
       { value: 'rest_ok', label: "I relax" },
@@ -66,7 +90,7 @@ export const questions = [
     ]
   },
   {
-    id: 7,
+    id: 9,
     headline: "When things feel heavy, what helps most?",
     options: [
       { value: 'reassurance', label: "Quiet reassurance" },
@@ -77,7 +101,7 @@ export const questions = [
     ]
   },
   {
-    id: 8,
+    id: 10,
     headline: "How often would you like a reminder that you're doing better than you think?",
     options: [
       { value: 'freq_daily', label: "Once a day (morning)" },

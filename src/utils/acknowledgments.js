@@ -106,30 +106,30 @@ export const getMirrorLines = (answers) => {
 };
 
 // Final mirror result lines (choose 2-3 max based on answers)
-// Question IDs: 1=Current State, 2=Mental Load, 4=Emotional Aftereffect, 5=Self-Relationship, 6=Energy & Rest
+// Question IDs: 1=Age, 2=Gender, 3=Current State, 4=Mental Load, 6=Emotional Aftereffect, 7=Self-Relationship, 8=Energy & Rest
 export const getFinalMirrorLines = (answers) => {
   const lines = [];
   
-  // Check for masking (Question 1, id: 1)
-  if (answers[1] === 'masking') {
+  // Check for masking (Question 3, id: 3)
+  if (answers[3] === 'masking') {
     lines.push("You've gotten really good at looking fine.");
     lines.push("Most people don't see how much you're carrying.");
   }
   
-  // Check for looping/replaying (Question 4, id: 4 OR Question 2, id: 2)
-  if (answers[4] === 'looping' || answers[2] === 'replaying') {
+  // Check for looping/replaying (Question 6, id: 6 OR Question 4, id: 4)
+  if (answers[6] === 'looping' || answers[4] === 'replaying') {
     lines.push("Your mind doesn't just process things.");
     lines.push("It replays them.");
   }
   
-  // Check for rest issues (Question 6, id: 6)
-  if (answers[6] === 'guilt_rest' || answers[6] === 'numb' || answers[6] === 'avoid_thoughts') {
+  // Check for rest issues (Question 8, id: 8)
+  if (answers[8] === 'guilt_rest' || answers[8] === 'numb' || answers[8] === 'avoid_thoughts') {
     lines.push("Rest doesn't always feel like rest.");
     lines.push("It feels like something you have to justify.");
   }
   
-  // Check for unworthy (Question 5, id: 5)
-  if (answers[5] === 'unworthy' || answers[5] === 'deflect') {
+  // Check for unworthy (Question 7, id: 7)
+  if (answers[7] === 'unworthy' || answers[7] === 'deflect') {
     lines.push("You have a hard time believing kind things about yourself.");
     lines.push("Not because they aren't true — but because you don't trust them yet.");
   }
