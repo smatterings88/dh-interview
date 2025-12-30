@@ -54,13 +54,13 @@ export default function AnnualOfferPage() {
           <p className="text-medium">What you get</p>
           <ul className="feature-list">
             <li>Morning + Evening Hugs<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>Support at both ends of the day — not just when you wake up.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>Support at both ends of the day — not just when you wake up.</span>
             </li>
             <li>Alex, anytime you need to talk<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>A place to get thoughts out of your head without advice, fixing, or pressure.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>A place to get thoughts out of your head without advice, fixing, or pressure.</span>
             </li>
             <li>A quiet place to land<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>Where you don't have to explain yourself first.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>Where you don't have to explain yourself first.</span>
             </li>
           </ul>
         </div>
@@ -74,16 +74,16 @@ export default function AnnualOfferPage() {
 
         {/* Price Anchor */}
         <div className="offer-content mt-32">
-          <div className="price" style={{ fontSize: '2rem', fontWeight: 600 }}>
+          <div className="price" style={{ fontSize: '1.9rem', fontWeight: 600 }}>
             27¢ a day
           </div>
           <p className="mt-16">That's what Hug Society works out to over the year.</p>
           <p className="mt-16">A small, steady amount —</p>
           <p>for support that shows up more than once a day, when you actually need it.</p>
-          <div className="price mt-24" style={{ fontSize: '1.5rem' }}>
+          <div className="price mt-24" style={{ fontSize: '1.45rem' }}>
             $97 for the full year
           </div>
-          <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
+          <p className="text-secondary mt-16" style={{ fontSize: '18px' }}>
             One decision. No monthly second-guessing.
           </p>
         </div>
@@ -94,13 +94,13 @@ export default function AnnualOfferPage() {
           <p className="mt-16">Because support doesn't only matter in the morning.</p>
           <ul className="feature-list mt-16">
             <li><strong>30-Day Midday Thrive Hug</strong> (normally $49)<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>Your midday reset — delivered when energy dips and stress creeps in.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>Your midday reset — delivered when energy dips and stress creeps in.</span>
             </li>
             <li><strong>Hug Music Pack</strong> (normally $29)<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>Seven calming soundscapes plus a guided meditation — something steady to come back to when your mind won't slow down.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>Seven calming soundscapes plus a guided meditation — something steady to come back to when your mind won't slow down.</span>
             </li>
           </ul>
-          <p className="text-secondary mt-16" style={{ fontSize: '14px' }}>
+          <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
             These extras are available during the 48-hour founder window.
           </p>
         </div>
@@ -127,7 +127,7 @@ export default function AnnualOfferPage() {
           >
             Join Hug Society — $97/year
           </button>
-          <p className="text-secondary text-center mt-16" style={{ fontSize: '14px' }}>
+          <p className="text-secondary text-center mt-16" style={{ fontSize: '16px' }}>
             You'll keep receiving the Daily Hug either way.
           </p>
           <p 
@@ -147,7 +147,7 @@ export default function AnnualOfferPage() {
               }
               navigate('/monthly', { state: userData });
             }}
-            style={{ cursor: 'pointer', textDecoration: 'underline', fontSize: '16px' }}
+            style={{ cursor: 'pointer', textDecoration: 'underline', fontSize: '18px' }}
           >
             Not ready yet?
           </p>
@@ -155,10 +155,10 @@ export default function AnnualOfferPage() {
 
         {/* Year-End Line */}
         <div className="offer-content mt-32 text-center">
-          <p className="text-secondary" style={{ fontSize: '16px' }}>
+          <p className="text-secondary" style={{ fontSize: '18px' }}>
             That's okay. You'll keep receiving the Daily Hug either way.
           </p>
-          <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
+          <p className="text-secondary mt-16" style={{ fontSize: '18px' }}>
             Hug Society will be here — especially if you want more support as the year turns.
           </p>
         </div>

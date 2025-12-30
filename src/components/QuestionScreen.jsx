@@ -36,7 +36,7 @@ export default function QuestionScreen({ question, onAnswer, autoAdvanceDelay = 
           <p className="question-text mt-16">{question.question}</p>
         )}
         {isFirstEmotionalQuestion && (
-          <p className="text-secondary mt-12" style={{ fontSize: '0.9rem', fontStyle: 'italic' }}>
+          <p className="text-secondary mt-12" style={{ fontSize: '1rem', fontStyle: 'italic' }}>
             There's no right answer. Just choose what fits.
           </p>
         )}

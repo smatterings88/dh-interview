@@ -47,27 +47,27 @@ export default function MonthlyOfferPage() {
           <p className="text-medium">What you'll get</p>
           <ul className="feature-list">
             <li>Morning + Evening Hugs<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>Support at both ends of the day — not just once in the morning.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>Support at both ends of the day — not just once in the morning.</span>
             </li>
             <li>Alex, anytime you need to talk<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>A place to get thoughts out of your head without advice or fixing.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>A place to get thoughts out of your head without advice or fixing.</span>
             </li>
             <li>A quiet place to land<br />
-              <span className="text-secondary" style={{ fontSize: '16px' }}>When the day gets heavy and you don't want to carry it alone.</span>
+              <span className="text-secondary" style={{ fontSize: '18px' }}>When the day gets heavy and you don't want to carry it alone.</span>
             </li>
           </ul>
         </div>
 
         {/* Price */}
         <div className="offer-content mt-32">
-          <div className="price" style={{ fontSize: '2rem', fontWeight: 600 }}>
+          <div className="price" style={{ fontSize: '1.9rem', fontWeight: 600 }}>
             $15 per month
           </div>
           <p className="mt-16">Hug Society isn't designed to "work" in a few days.</p>
           <p className="mt-16">It works when your nervous system has time to feel the rhythm of being supported —</p>
           <p>morning, evening, and in between.</p>
           <p className="mt-16">That's why the monthly option has a 3-month minimum.</p>
-          <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
+          <p className="text-secondary mt-16" style={{ fontSize: '18px' }}>
             (Same experience as the yearly plan. Just paid monthly.)
           </p>
         </div>
@@ -105,14 +105,14 @@ export default function MonthlyOfferPage() {
           >
             Start Hug Society — $15/month
           </button>
-          <p className="text-secondary text-center mt-16" style={{ fontSize: '14px' }}>
+          <p className="text-secondary text-center mt-16" style={{ fontSize: '16px' }}>
             3-month minimum • Same experience as yearly
           </p>
         </div>
 
         {/* Safety Strip */}
         <div className="offer-content mt-32 text-center">
-          <p className="text-secondary" style={{ fontSize: '14px' }}>
+          <p className="text-secondary" style={{ fontSize: '16px' }}>
             Secure checkout • Cancel after the minimum • No spam. No upsells inside Alex.
           </p>
         </div>

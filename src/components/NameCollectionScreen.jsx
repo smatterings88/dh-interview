@@ -93,7 +93,7 @@ export default function NameCollectionScreen({ onNameSubmit }) {
             className="email-input"
             style={{ marginBottom: '8px' }}
           />
-          <p className="helper-text text-secondary" style={{ fontSize: '14px', marginBottom: '24px' }}>
+          <p className="helper-text text-secondary" style={{ fontSize: '16px', marginBottom: '24px' }}>
             So we can speak to you like a real person.
           </p>
           
@@ -110,7 +110,7 @@ export default function NameCollectionScreen({ onNameSubmit }) {
               width: '100%',
               padding: '16px 20px',
               fontFamily: 'Montserrat, sans-serif',
-              fontSize: '18px',
+              fontSize: '20px',
               fontWeight: 400,
               border: '1px solid var(--text-primary)',
               borderRadius: '14px',
@@ -139,7 +139,7 @@ export default function NameCollectionScreen({ onNameSubmit }) {
           </select>
           
           {error && (
-            <p className="text-secondary" style={{ color: 'var(--coral-primary)', marginBottom: '16px', fontSize: '14px' }}>
+            <p className="text-secondary" style={{ color: 'var(--coral-primary)', marginBottom: '16px', fontSize: '16px' }}>
               {error}
             </p>
           )}

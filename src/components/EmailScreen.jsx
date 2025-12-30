@@ -48,7 +48,7 @@ export default function EmailScreen({ onEmailSubmit }) {
             autoFocus
           />
           {error && (
-            <p className="text-secondary mt-16" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            <p className="text-secondary mt-16" style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
               {error}
             </p>
           )}
