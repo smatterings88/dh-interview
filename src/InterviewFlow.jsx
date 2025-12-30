@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EntryScreen from './components/EntryScreen';
 import EmailScreen from './components/EmailScreen';
+import SimpleNameScreen from './components/SimpleNameScreen';
 import QuestionScreen from './components/QuestionScreen';
 import TransitionScreen from './components/TransitionScreen';
+import TransitionScreenNew from './components/TransitionScreenNew';
 import MirrorA from './components/MirrorA';
 import MirrorB from './components/MirrorB';
 import MirrorC from './components/MirrorC';
@@ -23,6 +25,7 @@ import './App.css';
 const SCREENS = {
   ENTRY: 'entry',
   EMAIL: 'email',
+  SIMPLE_NAME: 'simple_name',
   QUESTION: 'question',
   TRANSITION_TO_EMOTIONAL: 'transition_to_emotional',
   MIRROR_A: 'mirror_a',
@@ -31,6 +34,7 @@ const SCREENS = {
   MIRROR_D: 'mirror_d',
   MICRO_PAUSE: 'micro_pause',
   FINAL_MIRROR: 'final_mirror',
+  TRANSITION_NEW: 'transition_new',
   ALEX: 'alex',
   DAILY_HUG_CONFIRM: 'daily_hug_confirm',
   OFFER_ANNUAL: 'offer_annual',
@@ -97,9 +101,24 @@ function InterviewFlow() {
     if (!userEmail) {
       setCurrentScreen(SCREENS.EMAIL);
     } else {
-      setCurrentScreen(SCREENS.QUESTION);
-      setCurrentQuestionIndex(0); // Start with question 1 (Age)
+      // After entry, show simple name collection
+      setCurrentScreen(SCREENS.SIMPLE_NAME);
     }
+  };
+
+  const handleSimpleNameContinue = (name) => {
+    setFirstName(name);
+    // Save to state
+    try {
+      const existingData = JSON.parse(localStorage.getItem('dh_userData') || '{}');
+      existingData.firstName = name;
+      localStorage.setItem('dh_userData', JSON.stringify(existingData));
+    } catch (error) {
+      console.error('Error saving name:', error);
+    }
+    // Proceed to questions
+    setCurrentScreen(SCREENS.QUESTION);
+    setCurrentQuestionIndex(0); // Start with question 1 (Age)
   };
 
   const handleEmailSubmit = (email) => {
@@ -115,14 +134,36 @@ function InterviewFlow() {
       console.error('Error saving email to localStorage:', error);
     }
     
-    setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(0); // Start with question 1 (Age)
+    // After email, show simple name collection
+    setCurrentScreen(SCREENS.SIMPLE_NAME);
   };
 
   const handleQuestionAnswer = async (value) => {
     const questionId = questions[currentQuestionIndex].id;
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
+
+    // Save gender if this is the gender question (question 2)
+    if (questionId === 2) {
+      // Map question values to gender format
+      const genderMap = {
+        'gender_woman': 'female',
+        'gender_man': 'male',
+        'gender_nonbinary': 'nonbinary',
+        'gender_noanswer': 'nonbinary' // Default to nonbinary if no answer
+      };
+      const mappedGender = genderMap[value] || 'nonbinary';
+      setGender(mappedGender);
+      
+      // Save to localStorage
+      try {
+        const existingData = JSON.parse(localStorage.getItem('dh_userData') || '{}');
+        existingData.gender = mappedGender;
+        localStorage.setItem('dh_userData', JSON.stringify(existingData));
+      } catch (error) {
+        console.error('Error saving gender:', error);
+      }
+    }
 
     // Add tag for each question answer
     // Format: q{questionId}_{answerValue}
@@ -248,7 +289,31 @@ function InterviewFlow() {
   };
 
   const handleFinalMirrorContinue = () => {
-    setCurrentScreen(SCREENS.ALEX);
+    // Check if user indicated freq_twice or freq_multi
+    const frequency = answers[10];
+    const hasFreqIndicator = frequency === 'freq_twice' || frequency === 'freq_multi';
+    
+    if (hasFreqIndicator) {
+      // Show new transition screen before offer
+      setCurrentScreen(SCREENS.TRANSITION_NEW);
+    } else {
+      // Go to Alex screen
+      setCurrentScreen(SCREENS.ALEX);
+    }
+  };
+
+  const handleTransitionNewContinue = () => {
+    // After transition screen, navigate to offer
+    const userData = {
+      answers,
+      tags,
+      userEmail,
+      frequency: answers[10],
+      firstName: firstName,
+      gender: gender
+    };
+    localStorage.setItem('dh_userData', JSON.stringify(userData));
+    navigate('/offer', { state: userData });
   };
 
   const handleAlexInterested = async () => {
@@ -270,17 +335,23 @@ function InterviewFlow() {
     const shouldShowOffer = frequency === 'freq_twice' || frequency === 'freq_multi' || true; // Always show offer if alex-interested
     
     if (shouldShowOffer) {
-      // Save user data and navigate to bridge screen (which then goes to offer)
-      const userData = {
-        answers,
-        tags: newTags,
-        userEmail,
-        frequency: frequency,
-        firstName: firstName,
-        gender: gender
-      };
-      localStorage.setItem('dh_userData', JSON.stringify(userData));
-      navigate('/bridge', { state: userData });
+      // Check if we need transition screen
+      const hasFreqIndicator = frequency === 'freq_twice' || frequency === 'freq_multi';
+      if (hasFreqIndicator) {
+        setCurrentScreen(SCREENS.TRANSITION_NEW);
+      } else {
+        // Save user data and navigate to offer
+        const userData = {
+          answers,
+          tags: newTags,
+          userEmail,
+          frequency: frequency,
+          firstName: firstName,
+          gender: gender
+        };
+        localStorage.setItem('dh_userData', JSON.stringify(userData));
+        navigate('/offer', { state: userData });
+      }
     } else {
       // Fallback - shouldn't happen
       setCurrentScreen(SCREENS.DAILY_HUG_CONFIRM);
@@ -348,6 +419,9 @@ function InterviewFlow() {
       case SCREENS.EMAIL:
         return <EmailScreen onEmailSubmit={handleEmailSubmit} />;
 
+      case SCREENS.SIMPLE_NAME:
+        return <SimpleNameScreen onContinue={handleSimpleNameContinue} />;
+
       case SCREENS.QUESTION:
         return (
           <QuestionScreen
@@ -377,6 +451,9 @@ function InterviewFlow() {
 
       case SCREENS.FINAL_MIRROR:
         return <MirrorScreen answers={answers} onContinue={handleFinalMirrorContinue} />;
+
+      case SCREENS.TRANSITION_NEW:
+        return <TransitionScreenNew gender={gender} onContinue={handleTransitionNewContinue} />;
 
       case SCREENS.ALEX:
         return (

@@ -121,6 +121,18 @@ button:disabled {
   width: 100%;
 }
 
+/* Warm neutral buttons for interview/consent actions */
+.btn-warm-neutral {
+  background-color: #E5D5C8;
+  color: var(--text-primary);
+  width: 100%;
+  border: none;
+}
+
+.btn-warm-neutral:hover {
+  background-color: #D4C5B9;
+}
+
 /* Screen Container */
 .screen-container {
   min-height: 100vh;
@@ -148,8 +160,8 @@ button:disabled {
 }
 
 .option-button {
-  background-color: transparent;
-  border: 1px solid var(--text-primary);
+  background-color: white;
+  border: 2px solid #E5D5C8;
   color: var(--text-primary);
   text-align: left;
   padding: 20px 24px;
@@ -162,8 +174,8 @@ button:disabled {
 }
 
 .option-button:hover:not(:disabled) {
-  opacity: 0.8;
-  border-color: var(--coral-muted);
+  border-color: #D4C5B9;
+  background-color: #F5F0EB;
 }
 
 .option-button:disabled {
@@ -171,10 +183,10 @@ button:disabled {
 }
 
 .option-button.selected {
-  border: 2px solid var(--coral-primary);
-  background-color: var(--coral-wash);
+  border: 2px solid #E87C6A;
+  background-color: rgba(232, 124, 106, 0.08);
   font-weight: 500;
-  border-left: 4px solid var(--coral-primary);
+  border-left: 4px solid #E87C6A;
   padding-left: 20px;
 }
 

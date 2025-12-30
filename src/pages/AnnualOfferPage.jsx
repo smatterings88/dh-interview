@@ -90,18 +90,17 @@ export default function AnnualOfferPage() {
 
         {/* Fast-Action Bonuses */}
         <div className="offer-content mt-32">
-          <p className="text-medium">If you join in the <strong>next 48 hours</strong>, you'll also receive:</p>
-          <p className="mt-16">Because support doesn't only matter in the morning.</p>
+          <p className="text-medium">Join in the next 48 hours and you'll also receive:</p>
           <ul className="feature-list mt-16">
-            <li><strong>30-Day Midday Thrive Hug</strong> (normally $49)<br />
+            <li><strong>30-Day Midday Thrive Hug</strong> ($49 value)<br />
               <span className="text-secondary" style={{ fontSize: '18px' }}>Your midday reset — delivered when energy dips and stress creeps in.</span>
             </li>
-            <li><strong>Hug Music Pack</strong> (normally $29)<br />
+            <li><strong>Hug Music Pack</strong> ($29 value)<br />
               <span className="text-secondary" style={{ fontSize: '18px' }}>Seven calming soundscapes plus a guided meditation — something steady to come back to when your mind won't slow down.</span>
             </li>
           </ul>
           <p className="text-secondary mt-16" style={{ fontSize: '16px' }}>
-            These extras are available during the 48-hour founder window.
+            These are founder bonuses for acting during the launch window.
           </p>
         </div>
 
@@ -127,9 +126,6 @@ export default function AnnualOfferPage() {
           >
             Join Hug Society — $97/year
           </button>
-          <p className="text-secondary text-center mt-16" style={{ fontSize: '16px' }}>
-            You'll keep receiving the Daily Hug either way.
-          </p>
           <p 
             className="text-secondary text-center mt-24" 
             onClick={async () => {
@@ -147,9 +143,12 @@ export default function AnnualOfferPage() {
               }
               navigate('/monthly', { state: userData });
             }}
-            style={{ cursor: 'pointer', textDecoration: 'underline', fontSize: '18px' }}
+            style={{ cursor: 'pointer', textDecoration: 'underline', fontSize: '18px', color: 'var(--coral-primary)' }}
           >
             Not ready yet?
+          </p>
+          <p className="text-secondary text-center mt-16" style={{ fontSize: '16px' }}>
+            You'll keep receiving the Daily Hug either way.
           </p>
         </div>
 
