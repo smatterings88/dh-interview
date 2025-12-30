@@ -18,59 +18,6 @@ export default function AnnualOfferPage() {
     }
   }, [location]);
 
-  // Check tags - they might be in format "q10_freq_twice" or just "freq_twice"
-  const hasFreqTwiceOrMulti = userData?.tags?.some(tag => 
-    tag.includes('freq_twice') || tag.includes('freq_multi')
-  ) || userData?.answers?.[10] === 'freq_twice' || userData?.answers?.[10] === 'freq_multi';
-  
-  const hasAlexInterested = userData?.tags?.some(tag => 
-    tag.includes('alex-interested')
-  ) || userData?.tags?.includes('alex-interested');
-  
-  const emotionalState = userData?.answers?.[3]; // First emotional question
-
-  // Determine which transition to show
-  const getTransition = () => {
-    if (hasFreqTwiceOrMulti) {
-      return {
-        headline: "Based on what you just shared…",
-        body: (
-          <>
-            <p>You said you'd like more support during the day —</p>
-            <p>more than just one moment in the morning.</p>
-            <p className="mt-16">That makes sense.</p>
-            <p className="mt-16">Some days, one touchpoint isn't enough — especially when your mind keeps going, or the day gets heavier as it goes on.</p>
-            <p className="mt-16">So we built something for exactly that.</p>
-          </>
-        )
-      };
-    } else if (hasAlexInterested) {
-      return {
-        headline: "Based on what you just shared…",
-        body: (
-          <>
-            <p>You didn't say you need more messages.</p>
-            <p>You said it would help to have someone there when things feel heavy —</p>
-            <p>someone you can talk to without being judged, minimized, or fixed.</p>
-            <p className="mt-16">That's what this is for.</p>
-          </>
-        )
-      };
-    } else {
-      return {
-        headline: "Based on what you just shared…",
-        body: (
-          <>
-            <p>Some people want more check-ins.</p>
-            <p>Some people just want to know support is there when the day turns.</p>
-            <p className="mt-16">Either way — this is the next layer.</p>
-          </>
-        )
-      };
-    }
-  };
-
-  const transition = getTransition();
 
   if (!userData) {
     return (
@@ -85,21 +32,21 @@ export default function AnnualOfferPage() {
   return (
     <div className="screen-container">
       <div className="screen-content">
-        {/* Transition Section */}
-        <h2 className="text-medium">{transition.headline}</h2>
-        <div className="offer-content mt-24">
-          {transition.body}
-        </div>
-
         {/* What This Is */}
-        <div className="offer-content mt-32">
-          <p className="text-medium">This is Hug Society</p>
-          <p className="mt-16">Hug Society exists for the moments the Daily Hug can't fully cover.</p>
-          <p className="mt-16">Not because the Daily Hug isn't good —</p>
-          <p>but because support sometimes needs to show up more than once.</p>
-          <p className="mt-16">It's not therapy.</p>
-          <p>It's not a community.</p>
-          <p>It's just… steady support — morning, evening, and in between.</p>
+        <div className="offer-content">
+          <h2 className="text-medium">This is Hug Society.</h2>
+          <p className="mt-16">
+            Hug Society exists for the moments the Daily Hug can't fully cover.
+            <br /><br />
+            Not because the Daily Hug isn't good —<br />
+            but because support sometimes needs to show up more than once.
+          </p>
+          <p className="mt-16">
+            It's not therapy.<br />
+            It's not a community.
+            <br /><br />
+            It's just… steady support — morning, evening, and in between.
+          </p>
         </div>
 
         {/* What You Get */}

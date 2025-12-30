@@ -47,17 +47,50 @@ function InterviewFlow() {
   const [tags, setTags] = useState([]);
   const [alexResponse, setAlexResponse] = useState(null);
   const [userEmail, setUserEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [gender, setGender] = useState('');
 
-  // Read "vip" query parameter on mount
+  // Read "vip" query parameter and check for firstName/gender on mount
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const vipEmail = urlParams.get('vip');
     
+    // Load user data from localStorage
+    let storedData = {};
+    try {
+      storedData = JSON.parse(localStorage.getItem('dh_userData') || '{}');
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+    
+    // If email from query param, save it to localStorage and state
     if (vipEmail) {
       setUserEmail(vipEmail);
       console.log('Email from query string (vip parameter):', vipEmail);
+      // Save email to localStorage if not already there
+      if (!storedData.userEmail) {
+        storedData.userEmail = vipEmail;
+        localStorage.setItem('dh_userData', JSON.stringify(storedData));
+      }
     }
-  }, []);
+    
+    // Check for firstName/gender
+    if (storedData.firstName && storedData.gender) {
+      setFirstName(storedData.firstName);
+      setGender(storedData.gender);
+      // Also load email if present
+      if (storedData.userEmail) {
+        setUserEmail(storedData.userEmail);
+      }
+    } else {
+      // Redirect to name collection if firstName/gender not found
+      // Only redirect if we're not already on the name-collection route
+      if (window.location.pathname !== '/name-collection') {
+        navigate('/name-collection', { replace: true });
+      }
+      return;
+    }
+  }, [navigate]);
 
   const handleEntryContinue = () => {
     // If no email from query param, show email screen first
@@ -72,6 +105,16 @@ function InterviewFlow() {
   const handleEmailSubmit = (email) => {
     setUserEmail(email);
     console.log('Email from user input:', email);
+    
+    // Save email to localStorage
+    try {
+      const existingData = JSON.parse(localStorage.getItem('dh_userData') || '{}');
+      existingData.userEmail = email;
+      localStorage.setItem('dh_userData', JSON.stringify(existingData));
+    } catch (error) {
+      console.error('Error saving email to localStorage:', error);
+    }
+    
     setCurrentScreen(SCREENS.QUESTION);
     setCurrentQuestionIndex(0); // Start with question 1 (Age)
   };
@@ -154,7 +197,9 @@ function InterviewFlow() {
           answers: finalAnswers,
           tags: newTags,
           userEmail,
-          frequency: value
+          frequency: value,
+          firstName: firstName,
+          gender: gender
         };
         localStorage.setItem('dh_userData', JSON.stringify(userData));
         setAnswers(finalAnswers);
@@ -225,15 +270,17 @@ function InterviewFlow() {
     const shouldShowOffer = frequency === 'freq_twice' || frequency === 'freq_multi' || true; // Always show offer if alex-interested
     
     if (shouldShowOffer) {
-      // Save user data and navigate to offer page
+      // Save user data and navigate to bridge screen (which then goes to offer)
       const userData = {
         answers,
         tags: newTags,
         userEmail,
-        frequency: frequency
+        frequency: frequency,
+        firstName: firstName,
+        gender: gender
       };
       localStorage.setItem('dh_userData', JSON.stringify(userData));
-      navigate('/offer', { state: userData });
+      navigate('/bridge', { state: userData });
     } else {
       // Fallback - shouldn't happen
       setCurrentScreen(SCREENS.DAILY_HUG_CONFIRM);

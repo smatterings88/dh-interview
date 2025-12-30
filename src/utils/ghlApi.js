@@ -176,6 +176,74 @@ export const addTagToContact = async (contactId, tagName) => {
   }
 };
 
+// Update contact field (e.g., firstName)
+export const updateContactField = async (contactId, fieldName, fieldValue) => {
+  if (!API_KEY || !contactId) {
+    console.warn('GHL API key or contact ID not available');
+    return false;
+  }
+
+  try {
+    const url = `${API_BASE_URL}/contacts/${contactId}`;
+    
+    // Get current contact to check existing value
+    const getResponse = await fetch(url, {
+      headers: getHeaders()
+    });
+    
+    const contactData = await handleApiResponse(getResponse);
+    const currentContact = contactData.contact || contactData;
+    
+    // Check if field already has a value
+    if (currentContact[fieldName] && currentContact[fieldName].trim() !== '') {
+      console.log(`Contact already has ${fieldName}: "${currentContact[fieldName]}"`);
+      return true; // Field already has a value, no update needed
+    }
+    
+    // Update contact with new field value
+    const updateResponse = await fetch(url, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify({
+        [fieldName]: fieldValue
+      })
+    });
+    
+    await handleApiResponse(updateResponse);
+    console.log(`✅ GHL: Updated contact ${contactId} ${fieldName} to "${fieldValue}"`);
+    return true;
+  } catch (error) {
+    console.error(`Error updating contact ${fieldName}:`, error);
+    return false;
+  }
+};
+
+// Update contact firstName if not already set
+export const updateContactFirstName = async (email, firstName) => {
+  if (!email || !firstName) {
+    console.warn('Email or firstName not provided for GHL update');
+    return false;
+  }
+
+  try {
+    // Get or create contact
+    const contact = await getOrCreateContact(email);
+    
+    if (!contact || !contact.id) {
+      console.error('Failed to get or create contact for firstName update');
+      return false;
+    }
+    
+    // Update firstName if not already set
+    await updateContactField(contact.id, 'firstName', firstName.trim());
+    
+    return true;
+  } catch (error) {
+    console.error('Error updating contact firstName in GHL:', error);
+    return false;
+  }
+};
+
 // Process question answer and tag contact
 export const processQuestionAnswer = async (email, questionId, answerValue) => {
   if (!email) {
@@ -203,5 +271,7 @@ export const processQuestionAnswer = async (email, questionId, answerValue) => {
     console.error('Error processing question answer in GHL:', error);
   }
 };
+
+
 
 
