@@ -50,7 +50,7 @@ function InterviewFlow() {
   const [firstName, setFirstName] = useState('');
   const [gender, setGender] = useState('');
 
-  // Read "vip" query parameter and check for firstName/gender on mount
+  // Read "vip" query parameter and check for email on mount
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const vipEmail = urlParams.get('vip');
@@ -63,7 +63,7 @@ function InterviewFlow() {
       console.error('Error loading user data:', error);
     }
     
-    // If email from query param, save it to localStorage and state
+    // Priority 1: Check for email in query string
     if (vipEmail) {
       setUserEmail(vipEmail);
       console.log('Email from query string (vip parameter):', vipEmail);
@@ -72,34 +72,47 @@ function InterviewFlow() {
         storedData.userEmail = vipEmail;
         localStorage.setItem('dh_userData', JSON.stringify(storedData));
       }
+    } 
+    // Priority 2: Check for email in localStorage
+    else if (storedData.userEmail) {
+      setUserEmail(storedData.userEmail);
+      console.log('Email from localStorage:', storedData.userEmail);
+    }
+    // Priority 3: No email found - show email collection screen first
+    else {
+      console.log('No email found, showing email collection screen');
+      setCurrentScreen(SCREENS.EMAIL);
+      return; // Don't proceed further until email is collected
     }
     
-    // Check for firstName/gender
+    // Load firstName and gender if available
     if (storedData.firstName && storedData.gender) {
       setFirstName(storedData.firstName);
       setGender(storedData.gender);
-      // Also load email if present
-      if (storedData.userEmail) {
-        setUserEmail(storedData.userEmail);
-      }
-    } else {
-      // Redirect to name collection if firstName/gender not found
-      // Only redirect if we're not already on the name-collection route
-      if (window.location.pathname !== '/name-collection') {
-        navigate('/name-collection', { replace: true });
-      }
-      return;
     }
   }, [navigate]);
 
   const handleEntryContinue = () => {
-    // If no email from query param, show email screen first
-    if (!userEmail) {
-      setCurrentScreen(SCREENS.EMAIL);
-    } else {
-      setCurrentScreen(SCREENS.QUESTION);
-      setCurrentQuestionIndex(0); // Start with question 1 (Age)
+    // Check if firstName and gender are collected
+    // Load from localStorage to be sure
+    let storedData = {};
+    try {
+      storedData = JSON.parse(localStorage.getItem('dh_userData') || '{}');
+    } catch (error) {
+      console.error('Error loading user data:', error);
     }
+    
+    // If no firstName/gender, redirect to name collection
+    if (!storedData.firstName || !storedData.gender) {
+      navigate('/name-collection', { replace: true });
+      return;
+    }
+    
+    // If firstName/gender exist, proceed to questions
+    setFirstName(storedData.firstName);
+    setGender(storedData.gender);
+    setCurrentScreen(SCREENS.QUESTION);
+    setCurrentQuestionIndex(0); // Start with question 1 (Age)
   };
 
   const handleEmailSubmit = (email) => {
@@ -115,8 +128,8 @@ function InterviewFlow() {
       console.error('Error saving email to localStorage:', error);
     }
     
-    setCurrentScreen(SCREENS.QUESTION);
-    setCurrentQuestionIndex(0); // Start with question 1 (Age)
+    // After email is collected, proceed to entry screen
+    setCurrentScreen(SCREENS.ENTRY);
   };
 
   const handleQuestionAnswer = async (value) => {
