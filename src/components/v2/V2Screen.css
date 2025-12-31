@@ -1,0 +1,20 @@
+/* V2 Screen-specific styles */
+/* Most styles inherit from index.css */
+
+.v2-screen-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-vertical) var(--spacing-horizontal);
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.v2-screen-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
