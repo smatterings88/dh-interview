@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import IntroScreen from './components/v2/IntroScreen';
+import V2EmailScreen from './components/v2/EmailScreen';
 import V2QuestionScreen from './components/v2/QuestionScreen';
 import MultiSelectScreen from './components/v2/MultiSelectScreen';
 import AcknowledgmentScreen from './components/v2/AcknowledgmentScreen';
@@ -170,6 +171,24 @@ function V2InterviewFlow() {
   };
 
   const handleScreen1Continue = () => {
+    // Check if email exists (from state or userData), if not show email screen
+    if (!userEmail && !userData.email) {
+      setCurrentScreen(1.5); // Email collection screen
+    } else {
+      // Ensure userEmail is set if it's in userData
+      if (!userEmail && userData.email) {
+        setUserEmail(userData.email);
+      }
+      setCurrentScreen(2);
+    }
+  };
+
+  const handleEmailSubmit = (email) => {
+    setUserEmail(email);
+    const updated = { ...userData, email: email };
+    setUserData(updated);
+    saveUserData(updated);
+    // Continue to screen 2 after email is collected
     setCurrentScreen(2);
   };
 
@@ -496,6 +515,9 @@ function V2InterviewFlow() {
     switch (currentScreen) {
       case 1:
         return <IntroScreen onContinue={handleScreen1Continue} />;
+      
+      case 1.5:
+        return <V2EmailScreen onEmailSubmit={handleEmailSubmit} />;
       
       case 2:
         return (
