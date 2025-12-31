@@ -11,7 +11,8 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/name-collection" element={<NameCollectionScreen />} />
-        <Route path="/" element={<InterviewFlow />} />
+        <Route path="/" element={<V2InterviewFlow />} />
+        <Route path="/v1" element={<InterviewFlow />} />
         <Route path="/v2" element={<V2InterviewFlow />} />
         <Route path="/bridge" element={<BridgeScreen />} />
         <Route path="/offer" element={<AnnualOfferPage />} />
