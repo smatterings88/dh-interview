@@ -69,6 +69,20 @@ const SCREEN_11A_OPTIONS = [
   { value: 'unsure', label: 'I\'m not sure, but I\'m still here.' }
 ];
 
+const SCREEN_11A_PROMPT = `Before we personalize anything… one honest reflection.
+
+Most people who find The Daily Hug aren't in "crisis."
+
+They're just quietly carrying too much… for too long.
+
+They function.
+They handle things.
+They show up.
+
+But inside, there's a part of them that feels unheld.
+
+Which one feels closest?`;
+
 const SCREEN_12B_OPTIONS = [
   { value: '18-24', label: '18–24 (figuring it all out)' },
   { value: '25-34', label: '25–34 (building something)' },
@@ -649,7 +663,7 @@ function V2InterviewFlow() {
       case 11.25:
         return (
           <V2QuestionScreen
-            prompt="Before we personalize anything… one honest reflection.\n\nMost people who find The Daily Hug aren't in \"crisis.\"\n\nThey're just quietly carrying too much… for too long.\n\nThey function.\nThey handle things.\nThey show up.\n\nBut inside, there's a part of them that feels unheld.\n\nWhich one feels closest?"
+            prompt={SCREEN_11A_PROMPT}
             options={SCREEN_11A_OPTIONS}
             onAnswer={handleScreen11AAnswer}
           />
