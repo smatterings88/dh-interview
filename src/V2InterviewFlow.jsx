@@ -14,7 +14,7 @@ import EmailPlanScreen from './components/v2/EmailPlanScreen';
 import ConfirmationScreen from './components/v2/ConfirmationScreen';
 import ExitIntentModal from './components/v2/ExitIntentModal';
 import { initialUserData, getAcknowledgment, saveUserData, loadUserData, detectTimeZone } from './utils/v2Data';
-import { tagV2Contact, tagV2ContactMultiple, tagV2ForkDecision, tagV2PlanSelection, updateV2ContactFirstName } from './utils/v2GhlApi';
+import { tagV2Contact, tagV2ContactMultiple, tagV2ForkDecision, tagV2PlanSelection, updateV2ContactFirstName, tagV2Part2Declined } from './utils/v2GhlApi';
 import './App.css';
 
 // Screen definitions for Part 1 (Screens 1-13)
@@ -60,6 +60,13 @@ const SCREEN_10_OPTIONS = [
   { value: 'scrolling', label: 'Scrolling through your phone with no one to call' },
   { value: 'crying_car', label: 'Crying in your car before going inside' },
   { value: 'fine_face', label: 'Putting on the \'I\'m fine\' face every single day' }
+];
+
+const SCREEN_11A_OPTIONS = [
+  { value: 'yes', label: 'Yes. That\'s me.' },
+  { value: 'some', label: 'Some of that is me.' },
+  { value: 'no', label: 'Not really.' },
+  { value: 'unsure', label: 'I\'m not sure, but I\'m still here.' }
 ];
 
 const SCREEN_12B_OPTIONS = [
@@ -237,6 +244,17 @@ function V2InterviewFlow() {
   };
 
   const handleScreen11Continue = () => {
+    setCurrentScreen(11.25); // 11A - The Diagnosis
+  };
+
+  const handleScreen11AAnswer = async (value) => {
+    const newData = { ...userData, identity_lock: value };
+    setUserData(newData);
+    
+    if (userEmail) {
+      await tagV2Contact(userEmail, 'identity_lock', value);
+    }
+    
     setCurrentScreen(11.5); // 11B - Personalization Bridge
   };
 
@@ -440,7 +458,26 @@ function V2InterviewFlow() {
   };
 
   const handleScreen27Continue = () => {
+    setCurrentScreen(27.5);
+  };
+
+  const handleSoftOffRampReady = () => {
     setCurrentScreen(28);
+  };
+
+  const handleSoftOffRampDecline = async () => {
+    const newData = { 
+      ...userData, 
+      completed_at: new Date().toISOString()
+    };
+    setUserData(newData);
+    saveUserData(newData);
+
+    if (userEmail) {
+      await tagV2Part2Declined(userEmail);
+    }
+
+    window.location.href = 'https://dailyhug.com';
   };
 
   const handleScreen28Continue = () => {
@@ -609,6 +646,15 @@ function V2InterviewFlow() {
           />
         );
       
+      case 11.25:
+        return (
+          <V2QuestionScreen
+            prompt="Before we personalize anything… one honest reflection.\n\nMost people who find The Daily Hug aren't in \"crisis.\"\n\nThey're just quietly carrying too much… for too long.\n\nThey function.\nThey handle things.\nThey show up.\n\nBut inside, there's a part of them that feels unheld.\n\nWhich one feels closest?"
+            options={SCREEN_11A_OPTIONS}
+            onAnswer={handleScreen11AAnswer}
+          />
+        );
+
       case 11.5:
         return (
           <AcknowledgmentScreen
@@ -783,27 +829,38 @@ function V2InterviewFlow() {
         );
       
       case 23:
-        // Build summary for mirror screen
-        const emotionalStateText = userData.emotional_state || 'sharing';
-        const primaryWeightText = userData.primary_weight || 'something heavy';
-        const frequencyText = userData.hug_frequency || 'regularly';
-        const stylesText = userData.hug_styles?.length > 0 
-          ? userData.hug_styles.join(', ')
-          : 'various styles';
-        
+        // Build human-readable labels for mirror screen
+        const mapValueToLabel = (options, value) =>
+          options.find((opt) => opt.value === value)?.label || value || '—';
+
+        const emotionalStateLabel = mapValueToLabel(SCREEN_2_OPTIONS, userData.emotional_state);
+        const primaryWeightLabel = mapValueToLabel(SCREEN_4_OPTIONS, userData.primary_weight);
+        const frequencyLabel = mapValueToLabel(SCREEN_17_OPTIONS, userData.hug_frequency);
+
+        const hugStylesLabels =
+          (userData.hug_styles || [])
+            .map((val) => mapValueToLabel(SCREEN_19_OPTIONS, val))
+            .join(', ') || '—';
+
+        const ageRangeLabel = userData.age_range
+          ? mapValueToLabel(SCREEN_12B_OPTIONS, userData.age_range)
+          : null;
+
         const summary = (
-          <div>
-            <p>• You're feeling {emotionalStateText}</p>
-            <p>• You're carrying {primaryWeightText}</p>
-            <p>• You want to be supported {frequencyText}</p>
-            <p>• You resonate with {stylesText}</p>
-          </div>
+          <ul className="feature-list">
+            <li>Right now: {emotionalStateLabel}</li>
+            <li>Heaviest weight: {primaryWeightLabel}</li>
+            <li>Support frequency: {frequencyLabel}</li>
+            <li>What lands best: {hugStylesLabels}</li>
+            {ageRangeLabel && <li>Life season: {ageRangeLabel}</li>}
+          </ul>
         );
         
         return (
           <MirrorScreen
             firstName={userData.first_name}
             summary={summary}
+            subhead="We're not judging it. We're just naming it—so support can land properly."
             onContinue={handleScreen23Continue}
           />
         );
@@ -844,6 +901,32 @@ function V2InterviewFlow() {
           />
         );
       
+      case 27.5:
+        return (
+          <div className="screen-container">
+            <div className="screen-content">
+              <h2 className="text-medium">Not ready to decide? That&apos;s okay.</h2>
+              <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+                <p className="mb-16">
+                  If now isn&apos;t the moment, you&apos;ll still receive your Daily Hug.
+                </p>
+                <p>
+                  And you can come back to Hug Society anytime—
+                  when the &quot;one-a-day&quot; support stops being enough.
+                </p>
+              </div>
+              <div className="question-options mt-32">
+                <button className="btn-warm-neutral" onClick={handleSoftOffRampReady}>
+                  I&apos;m ready →
+                </button>
+                <button className="option-button" onClick={handleSoftOffRampDecline}>
+                  I&apos;ll stay with Daily Hug for now →
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       case 28:
         return (
           <OfferScreens

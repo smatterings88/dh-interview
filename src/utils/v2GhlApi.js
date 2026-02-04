@@ -118,3 +118,25 @@ export const tagV2PlanSelection = async (email, plan) => {
   }
 };
 
+// Tag soft off-ramp decision (chose not to join after pricing)
+export const tagV2Part2Declined = async (email) => {
+  if (!email) return false;
+
+  const tagName = 'dh_v2_part2_declined';
+
+  try {
+    const contact = await getOrCreateContact(email);
+    if (!contact || !contact.id) {
+      return false;
+    }
+
+    await addTagToContact(contact.id, tagName);
+    console.log(`✅ GHL V2: Tagged soft off-ramp "${tagName}"`);
+    return true;
+  } catch (error) {
+    console.error('Error tagging V2 part2_declined:', error);
+    return false;
+  }
+};
+
+

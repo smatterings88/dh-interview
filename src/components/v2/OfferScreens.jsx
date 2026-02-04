@@ -8,11 +8,31 @@ export default function OfferScreens({ screenType, firstName, onContinue }) {
       <div className="screen-container">
         <div className="screen-content">
           <h2 className="text-medium">
-            Here's the thing, {displayName}: What you just described? We built something for that. It's called The Hug Society. And it might be exactly what you're looking for.
+            This is exactly what Hug Society is for.
           </h2>
+          <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+            <p className="mb-16">
+              {displayName}, what you just described is the gap most people live with:
+            </p>
+            <p className="mb-16">
+              Support…<br />
+              but not when it actually hits.
+            </p>
+            <p className="mb-16">
+              Hug Society is the &quot;more than once a day&quot; layer—
+              for the moments the Daily Hug can&apos;t fully cover on its own.
+            </p>
+            <p className="mb-16">
+              No fixing.<br />
+              No pressure.
+            </p>
+            <p>
+              Just steadier presence—morning, evening, and in-between.
+            </p>
+          </div>
           <div className="mt-32">
             <button className="btn-warm-neutral" onClick={onContinue}>
-              Continue →
+              Show me →
             </button>
           </div>
         </div>

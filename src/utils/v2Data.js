@@ -7,6 +7,7 @@ export const initialUserData = {
   last_seen: '',
   three_am_moments: '',
   relatable_moments: [],
+  identity_lock: '',
   first_name: '',
   age_range: '',
   gender: '',
