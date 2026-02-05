@@ -116,7 +116,7 @@
 - **Content:** "Yeah. Those moments are brutal. And the worst part? Most people have no idea you're even going through them. Because you've gotten really good at hiding it."
 - **Next:** **Screen 11.25**
 
-### Screen 11.25: The Diagnosis
+### Screen 11.25: Shared Pattern
 - **Type:** `V2QuestionScreen` (Single-select)
 - **Title:** "Before we personalize anything… one honest reflection."
 - **Body:**
@@ -346,7 +346,7 @@
   - `hug_frequency`
     - `once` → "A daily check-in"
     - `2-3` → "Morning and evening support"
-    - `many` → "Maximum available support"
+    - `many` → "Several check-ins a day"
   - For any values not listed above, the UI falls back to the original option label text.
 - **Footer:** "Nothing added. Nothing interpreted."
 - **Button:** "Continue →"
@@ -427,7 +427,7 @@
 - **Type:** `PrimaryOfferScreen`
 - **Headline:** "Join Hug Society."
 - **Price/Body Line:** "Full access for a year. $97/year (about 27¢ a day)."
-- **Guarantee:** "30 days. If it's not a fit, just reply and we'll take care of it."
+- **Guarantee:** "30 days. If it's not a fit, just reply to any email and we'll take care of it. No awkward explanations. No hoops."
 - **Button:** "Join Hug Society — $97/year"
 - **Action:** On click:
   - Tags `dh_v2_hs_annual` in GHL

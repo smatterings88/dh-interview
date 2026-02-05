@@ -132,7 +132,7 @@ export function VisualIdentityScreen({ portraitSrc, onContinue }) {
         </div>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            This is who you are. Someone who doesn&apos;t need fixing. Someone who just wants steadier support.
+            This is who you are. Someone who doesn&apos;t need fixing — just steadier support when life gets heavy.
           </p>
         </div>
         <div className="mt-32">

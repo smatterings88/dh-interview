@@ -103,7 +103,7 @@ const RESULTS_LABELS = {
   hug_frequency: {
     once: 'A daily check-in',
     '2-3': 'Morning and evening support',
-    many: 'Maximum available support'
+    many: 'Several check-ins a day'
   }
 };
 
