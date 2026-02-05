@@ -2,3 +2,16 @@
   min-height: 100vh;
   width: 100%;
 }
+
+/* 500ms fade transition for the C1 -> C2 “breathing room” */
+.fade-container {
+  transition: opacity 500ms ease;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}

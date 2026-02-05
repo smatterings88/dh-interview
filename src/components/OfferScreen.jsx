@@ -1,5 +1,21 @@
 import './Screen.css';
 
+const buildCheckoutUrlWithEmail = (baseUrl) => {
+  try {
+    // Prefer V1 user data, then V2 user data
+    const v1 = JSON.parse(localStorage.getItem('dh_userData') || 'null');
+    const v2 = JSON.parse(localStorage.getItem('dh_v2_userData') || 'null');
+    const email = v1?.userEmail || v2?.email;
+    if (!email) return baseUrl;
+
+    const url = new URL(baseUrl);
+    url.searchParams.set('email', email);
+    return url.toString();
+  } catch {
+    return baseUrl;
+  }
+};
+
 // Get offer copy based on emotional state
 const getOfferCopy = (emotionalState) => {
   switch (emotionalState) {
@@ -167,7 +183,7 @@ export default function OfferScreen({
                 // Tag in GHL first
                 await onJoin('annual');
                 // Then redirect to checkout
-                window.location.href = 'https://dailyhug.com/join';
+                window.location.href = buildCheckoutUrlWithEmail('https://dailyhug.com/order');
               }}
             >
               Let Hug Society support me — $97/year
@@ -215,7 +231,7 @@ export default function OfferScreen({
                 // Tag in GHL first
                 await onJoin('monthly');
                 // Then redirect to checkout
-                window.location.href = 'https://dailyhug.com/join-monthly';
+                window.location.href = buildCheckoutUrlWithEmail('https://dailyhug.com/order-monthly');
               }}
             >
               Try Hug Society — $15/month

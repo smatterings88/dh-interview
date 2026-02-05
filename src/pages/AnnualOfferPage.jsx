@@ -121,7 +121,16 @@ export default function AnnualOfferPage() {
                   console.error('Error tagging in GHL:', error);
                 }
               }
-              window.location.href = 'https://dailyhug.com/join';
+              try {
+                const url = new URL('https://dailyhug.com/order');
+                if (userData?.userEmail) {
+                  url.searchParams.set('email', userData.userEmail);
+                }
+                window.location.href = url.toString();
+              } catch {
+                const emailParam = userData?.userEmail ? `?email=${encodeURIComponent(userData.userEmail)}` : '';
+                window.location.href = `https://dailyhug.com/order${emailParam}`;
+              }
             }}
           >
             Join Hug Society — $97/year

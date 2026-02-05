@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './V2Screen.css';
 
 // C2: Gentle Normalization
@@ -43,14 +44,31 @@ export function ReframeScreen({ onContinue }) {
 }
 
 // C4: The Bridge
-export function BridgeScreen({ onContinue }) {
+export function BridgeScreen({ firstName, onContinue }) {
+  const displayName = firstName || 'friend';
+
   return (
     <div className="screen-container">
       <div className="screen-content">
-        <h2 className="text-medium">When things feel like this, what actually helps?</h2>
+        <h2 className="text-medium">This is exactly what Hug Society is for.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+          <p className="mb-16">
+            {displayName}, what you just described is the gap most people live with:
+          </p>
+          <p className="mb-16">
+            Support…<br />
+            but not when it actually hits.
+          </p>
+          <p className="mb-16">
+            Hug Society is the &quot;more than once a day&quot; layer—
+            for the moments the Daily Hug can&apos;t fully cover on its own.
+          </p>
+          <p className="mb-16">
+            No fixing.<br />
+            No pressure.
+          </p>
           <p>
-            Not platitudes. Not being told to "just think positive."... What helps is support that matches you. That shows up without pressure.
+            Just steadier presence—morning, evening, and in-between.
           </p>
         </div>
         <div className="mt-32">
@@ -84,10 +102,40 @@ export function IdentityBridgeScreen({ onContinue }) {
 }
 
 // C6: Visual Identity
-export function VisualIdentityScreen({ onContinue }) {
+export function VisualIdentityScreen({ portraitSrc, onContinue }) {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <div className="screen-container">
       <div className="screen-content">
+        {/* Visual anchor portrait. If the image is missing, we fall back to a neutral placeholder. */}
+        <div className="mt-24" style={{ display: 'flex', justifyContent: 'center' }}>
+          {!imgError && portraitSrc ? (
+            <img
+              src={portraitSrc}
+              alt="Portrait"
+              style={{
+                width: 160,
+                height: 160,
+                borderRadius: 16,
+                objectFit: 'cover',
+                border: '1px solid rgba(0,0,0,0.08)'
+              }}
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div
+              aria-label="Portrait placeholder"
+              style={{
+                width: 160,
+                height: 160,
+                borderRadius: 16,
+                background: 'rgba(0,0,0,0.06)',
+                border: '1px solid rgba(0,0,0,0.08)'
+              }}
+            />
+          )}
+        </div>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
             Someone who doesn't need fixing. Someone who just wants to feel supported.
@@ -180,17 +228,12 @@ export function PrimaryOfferScreen({ onSelectAnnual }) {
     <div className="screen-container">
       <div className="screen-content">
         <h2 className="text-medium">Join Hug Society.</h2>
-        <div className="mt-24">
-          <p style={{ fontSize: '1.45rem', fontWeight: 600 }}>
-            $97 / year
-          </p>
-          <p className="text-secondary mt-8" style={{ fontSize: '1rem' }}>
-            (That's about 27¢ a day.)
-          </p>
+        <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+          <p>Full access for a year. $97/year (about 27¢ a day).</p>
         </div>
         <div className="mt-32">
           <button className="btn-primary" onClick={onSelectAnnual}>
-            Join Hug Society →
+            Join Hug Society — $97/year
           </button>
         </div>
       </div>
@@ -210,11 +253,11 @@ export function DownsellScreen({ onSelectMonthly, onSelectAnnual }) {
           </p>
         </div>
         <div className="question-options mt-32">
-          <button className="option-button" onClick={onSelectMonthly}>
-            $15 / month
+          <button className="btn-primary" onClick={onSelectMonthly}>
+            Start Monthly — $15/month
           </button>
-          <button className="btn-primary" onClick={onSelectAnnual}>
-            $97 / year (save $83)
+          <button className="option-button" onClick={onSelectAnnual}>
+            Join Hug Society — $97/year
           </button>
         </div>
       </div>

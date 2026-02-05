@@ -82,17 +82,28 @@ const SCREEN_11A_OPTIONS = [
 
 const SCREEN_11A_PROMPT = `Before we personalize anything… one honest reflection.
 
-Most people who find The Daily Hug aren't in "crisis."
+Most people who find The Daily Hug aren’t in 'crisis.'
+They’re just quietly carrying too much… for too long.
 
-They're just quietly carrying too much… for too long.
+They function. They handle things. They show up.
 
-They function.
-They handle things.
-They show up.
-
-But inside, there's a part of them that feels unheld.
+But inside, there’s a part of them that feels unheld.
 
 Which one feels closest?`;
+
+const RESULTS_LABELS = {
+  emotional_state: {
+    struggling: 'Things have been rough lately',
+    managing: "You're holding it together (barely)",
+    thriving: "You're actually doing quite well",
+    complicated: 'It depends — day to day'
+  },
+  primary_weight: {
+    loneliness: 'The weight of loneliness',
+    burnout: "Burnout from being the 'strong' one",
+    pretending: "The burden of pretending you're fine"
+  }
+};
 
 const SCREEN_12B_OPTIONS = [
   { value: '18-24', label: '18–24 (figuring it all out)' },
@@ -158,6 +169,7 @@ function V2InterviewFlow() {
   const [userData, setUserData] = useState(initialUserData);
   const [userEmail, setUserEmail] = useState('');
   const [showExitIntent, setShowExitIntent] = useState(false);
+  const [closingFadeClass, setClosingFadeClass] = useState('');
 
   // Load email from query param or localStorage on mount
   useEffect(() => {
@@ -188,6 +200,25 @@ function V2InterviewFlow() {
   useEffect(() => {
     saveUserData(userData);
   }, [userData]);
+
+  const buildCheckoutUrl = (baseUrl) => {
+    const email = userEmail || userData.email;
+    if (!email) return baseUrl;
+    try {
+      const url = new URL(baseUrl);
+      url.searchParams.set('email', email);
+      return url.toString();
+    } catch {
+      return `${baseUrl}?email=${encodeURIComponent(email)}`;
+    }
+  };
+
+  const getPortraitSrc = () => {
+    if (userData.age_range === '65+') return '/portraits/portrait_elder.jpg';
+    if (userData.gender === 'male') return '/portraits/portrait_m.jpg';
+    if (userData.gender === 'female') return '/portraits/portrait_f.jpg';
+    return '/portraits/portrait_neutral.jpg';
+  };
 
   const handleAnswer = async (questionKey, value) => {
     const newData = { ...userData, [questionKey]: value };
@@ -467,8 +498,18 @@ function V2InterviewFlow() {
   };
 
   // C1-C13 Closing Sequence Handlers
+  // 500ms fade “breathing room” from C1 -> C2
   const handleScreen23Continue = () => {
-    setCurrentScreen(24); // C2
+    setClosingFadeClass('fade-out');
+    setTimeout(() => {
+      setCurrentScreen(24); // C2
+      // Keep opacity at 0 on mount, then fade in
+      setClosingFadeClass('fade-out');
+      requestAnimationFrame(() => {
+        setClosingFadeClass('fade-in');
+      });
+      setTimeout(() => setClosingFadeClass(''), 500);
+    }, 500);
   };
 
   const handleC2Continue = () => {
@@ -517,8 +558,8 @@ function V2InterviewFlow() {
       await tagV2PlanSelection(userEmail, 'annual');
     }
     
-    // Redirect to checkout
-    window.location.href = 'https://dailyhug.com/join';
+    // Redirect to checkout (include email as a query param when available)
+    window.location.href = buildCheckoutUrl('https://dailyhug.com/order');
   };
 
   const handleC11SelectMonthly = async () => {
@@ -535,8 +576,8 @@ function V2InterviewFlow() {
       await tagV2PlanSelection(userEmail, 'monthly');
     }
     
-    // Redirect to checkout
-    window.location.href = 'https://dailyhug.com/join-monthly';
+    // Redirect to checkout (include email as a query param when available)
+    window.location.href = buildCheckoutUrl('https://dailyhug.com/order-monthly');
   };
 
   const handleC11SelectAnnual = async () => {
@@ -553,8 +594,8 @@ function V2InterviewFlow() {
       await tagV2PlanSelection(userEmail, 'annual');
     }
     
-    // Redirect to checkout
-    window.location.href = 'https://dailyhug.com/join';
+    // Redirect to checkout (include email as a query param when available)
+    window.location.href = buildCheckoutUrl('https://dailyhug.com/order');
   };
 
   const handleC12Continue = () => {
@@ -879,29 +920,39 @@ function V2InterviewFlow() {
       
       case 23:
         // C1: The Mirror Logic (Reflection Screen)
-        const mapValueToLabel = (options, value) =>
-          options.find((opt) => opt.value === value)?.label || value || '—';
+        const findOptionLabel = (options, value) =>
+          options.find((opt) => opt.value === value)?.label || null;
 
-        const emotionalStateLabel = mapValueToLabel(SCREEN_2_OPTIONS, userData.emotional_state);
-        const primaryWeightLabel = mapValueToLabel(SCREEN_4_OPTIONS, userData.primary_weight);
-        const frequencyLabel = mapValueToLabel(SCREEN_17_OPTIONS, userData.hug_frequency);
+        const emotionalStateLabel =
+          RESULTS_LABELS.emotional_state[userData.emotional_state] ||
+          findOptionLabel(SCREEN_2_OPTIONS, userData.emotional_state) ||
+          '—';
 
-        const hugStylesLabels =
-          (userData.hug_styles || [])
-            .map((val) => mapValueToLabel(SCREEN_19_OPTIONS, val))
-            .join(', ') || '—';
+        const primaryWeightLabel =
+          RESULTS_LABELS.primary_weight[userData.primary_weight] ||
+          findOptionLabel(SCREEN_4_OPTIONS, userData.primary_weight) ||
+          '—';
+
+        const frequencyLabel =
+          findOptionLabel(SCREEN_17_OPTIONS, userData.hug_frequency) || '—';
+
+        const hugStylesLabels = (userData.hug_styles || [])
+          .map((val) => findOptionLabel(SCREEN_19_OPTIONS, val))
+          .filter(Boolean)
+          .join(', ') || '—';
 
         const summary = (
           <ul className="feature-list" style={{ listStyle: 'none', padding: 0 }}>
             <li>Right now: {emotionalStateLabel}</li>
-            <li>What weighs most: {primaryWeightLabel}</li>
-            <li>What helps you most: {hugStylesLabels}</li>
-            <li>How often support feels right: {frequencyLabel}</li>
+            <li>Heaviest weight: {primaryWeightLabel}</li>
+            <li>Support frequency: {frequencyLabel}</li>
+            <li>What lands best: {hugStylesLabels}</li>
           </ul>
         );
         
         return (
           <MirrorScreen
+            firstName={userData.first_name}
             summary={summary}
             onContinue={handleScreen23Continue}
           />
@@ -917,7 +968,7 @@ function V2InterviewFlow() {
       
       case 26:
         // C4: The Bridge
-        return <BridgeScreen onContinue={handleC4Continue} />;
+        return <BridgeScreen firstName={userData.first_name} onContinue={handleC4Continue} />;
       
       case 27:
         // C5: Identity Bridge
@@ -925,7 +976,7 @@ function V2InterviewFlow() {
       
       case 28:
         // C6: Visual Identity
-        return <VisualIdentityScreen onContinue={handleC6Continue} />;
+        return <VisualIdentityScreen portraitSrc={getPortraitSrc()} onContinue={handleC6Continue} />;
       
       case 29:
         // C7: Alex Reveal
@@ -966,7 +1017,13 @@ function V2InterviewFlow() {
   };
 
   return (
-    <div className="App">
+    <div
+      className={`App ${
+        closingFadeClass && (currentScreen === 23 || currentScreen === 24)
+          ? `fade-container ${closingFadeClass}`
+          : ''
+      }`}
+    >
       {renderScreen()}
       {showExitIntent && (
         <ExitIntentModal
