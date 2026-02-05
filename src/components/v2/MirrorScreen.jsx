@@ -10,7 +10,7 @@ export default function MirrorScreen({ firstName, summary, onContinue }) {
           Here's what you told us, {displayName}.
         </h2>
         <p className="mt-16" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
-          We’re not judging it. We’re not fixing it. We’re just reflecting it back — so support can land properly.
+          We’re not judging it. We’re just naming it—so support can land properly.
         </p>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           {typeof summary === 'string' ? <p>{summary}</p> : summary}

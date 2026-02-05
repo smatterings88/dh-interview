@@ -446,9 +446,11 @@ function V2InterviewFlow() {
     setUserData(newData);
     saveUserData(newData);
     
-    // Tag fork decision
+    // Tag fork decision and off-ramp identity
     if (userEmail) {
       await tagV2ForkDecision(userEmail, 'good_for_now');
+      await tagV2Contact(userEmail, 'daily_hug_subscriber', 'true');
+      await tagV2Contact(userEmail, 'chose_depth', 'false');
     }
     
     setCurrentScreen(14.5); // 14B - Graceful Exit

@@ -11,10 +11,10 @@ export default function GracefulExitScreen({ firstName }) {
     <div className="screen-container">
       <div className="screen-content">
         <h1>
-          All good, {displayName}. 💛
+          You’re all set, {displayName}. 💛
         </h1>
         <p className="mt-16" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
-          Thanks for taking a moment to check in. You shared enough for us to start showing up in a way that actually fits. There’s nothing else you need to decide right now. Before you go, here’s today’s Hug — just for you.
+          Thanks for taking a moment to check in. We’ve got what we need to start showing up for you in a way that actually fits. You don’t need to decide anything else right now. Before you go, here’s a Hug — just for you.
         </p>
 
         <div
@@ -32,16 +32,16 @@ export default function GracefulExitScreen({ firstName }) {
             Hey {displayName},
           </p>
           <p className="mt-8">
-            You don’t need to be certain. You don’t need to explain anything. The fact that you paused and checked in matters.
+            You don’t need to have everything figured out. You don’t need to feel a certain way to &quot;deserve&quot; support. The fact that you paused, checked in, and told the truth — even briefly — counts.
           </p>
           <p className="mt-8">
-            Whatever today brings, you’re not carrying it alone anymore. We’ll be here tomorrow. 💛
+            Whatever today looks like for you, you’re not doing it alone anymore. We’ll be back tomorrow. 💛
           </p>
         </div>
 
         <div className="mt-32">
           <button className="btn-warm-neutral" onClick={handleDone}>
-            See you tomorrow
+            👉 See you tomorrow
           </button>
         </div>
       </div>

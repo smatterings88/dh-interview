@@ -52,23 +52,8 @@ export function BridgeScreen({ firstName, onContinue }) {
       <div className="screen-content">
         <h2 className="text-medium">This is exactly what Hug Society is for.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
-          <p className="mb-16">
-            {displayName}, what you just described is the gap most people live with:
-          </p>
-          <p className="mb-16">
-            Support…<br />
-            but not when it actually hits.
-          </p>
-          <p className="mb-16">
-            Hug Society is the &quot;more than once a day&quot; layer—
-            for the moments the Daily Hug can&apos;t fully cover on its own.
-          </p>
-          <p className="mb-16">
-            No fixing.<br />
-            No pressure.
-          </p>
           <p>
-            Just steadier presence—morning, evening, and in-between.
+            {displayName}, what you just described is the gap most people live with: Support… but not when it actually hits. Hug Society is the &quot;more than once a day&quot; layer—for the moments the Daily Hug can&apos;t fully cover on its own. No fixing. No pressure. Just steadier presence—morning, evening, and in-between.
           </p>
         </div>
         <div className="mt-32">
@@ -125,20 +110,29 @@ export function VisualIdentityScreen({ portraitSrc, onContinue }) {
             />
           ) : (
             <div
-              aria-label="Portrait placeholder"
+              aria-label="Neutral identity icon"
               style={{
                 width: 160,
                 height: 160,
                 borderRadius: 16,
                 background: 'rgba(0,0,0,0.06)',
-                border: '1px solid rgba(0,0,0,0.08)'
+                border: '1px solid rgba(0,0,0,0.08)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2.5rem',
+                color: 'rgba(0,0,0,0.35)'
               }}
-            />
+            >
+              <span role="img" aria-label="neutral person">
+                🙂
+              </span>
+            </div>
           )}
         </div>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            Someone who doesn't need fixing. Someone who just wants to feel supported.
+            This is who you are. Someone who doesn&apos;t need fixing. Someone who just wants steadier support.
           </p>
         </div>
         <div className="mt-32">
@@ -158,11 +152,11 @@ export function AlexRevealScreen({ onContinue }) {
       <div className="screen-content">
         <h2 className="text-medium">This is Alex.</h2>
         <h3 className="mt-16" style={{ fontSize: '1.1rem', fontWeight: 500 }}>
-          Alex is your HugBot — a gentle AI companion built to support you emotionally.
+          Alex is built for moments like the ones you just described.
         </h3>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders — based on what you said matters most.
+            Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders—based on what you said actually helps.
           </p>
         </div>
         <div className="mt-32">
@@ -230,6 +224,9 @@ export function PrimaryOfferScreen({ onSelectAnnual }) {
         <h2 className="text-medium">Join Hug Society.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>Full access for a year. $97/year (about 27¢ a day).</p>
+          <p className="mt-8">
+            30 days. If it&apos;s not a fit, just reply and we&apos;ll take care of it.
+          </p>
         </div>
         <div className="mt-32">
           <button className="btn-primary" onClick={onSelectAnnual}>

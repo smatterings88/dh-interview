@@ -227,15 +227,18 @@
 
 ### Screen 14.5: Gift Exit (The Honor + Daily Hug Exit)
 - **Type:** `GracefulExitScreen`
-- **Headline:** "All good, {first_name}. 💛" (fallback: "All good, friend.")
-- **Body:** "Thanks for taking a moment to check in. You shared enough for us to start showing up in a way that actually fits. There’s nothing else you need to decide right now. Before you go, here’s today’s Hug — just for you."
+- **Headline:** "You’re all set, {first_name}. 💛" (fallback: "You’re all set, friend.")
+- **Body:** "Thanks for taking a moment to check in. We’ve got what we need to start showing up for you in a way that actually fits. You don’t need to decide anything else right now. Before you go, here’s a Hug — just for you."
 - **Personalized Hug Box:**
   - "Hey {first_name},"
-  - "You don’t need to be certain. You don’t need to explain anything. The fact that you paused and checked in matters."
-  - "Whatever today brings, you’re not carrying it alone anymore. We’ll be here tomorrow. 💛"
-- **Action:** "See you tomorrow" button
+  - "You don’t need to have everything figured out. You don’t need to feel a certain way to 'deserve' support. The fact that you paused, checked in, and told the truth — even briefly — counts."
+  - "Whatever today looks like for you, you’re not doing it alone anymore. We’ll be back tomorrow. 💛"
+- **Action:** "👉 See you tomorrow" button
 - **External URL:** `https://dailyhug.com` (redirects on click)
 - **Data Captured:** `completed_at` (timestamp)
+ - **GHL Tags (off-ramp):**
+   - `dh_v2_daily_hug_subscriber_true`
+   - `dh_v2_chose_depth_false`
 
 ---
 
@@ -325,7 +328,7 @@
 ### Screen 23 (C1): The Mirror Logic (Reflection)
 - **Type:** `MirrorScreen`
 - **Headline:** "Here’s what you told us, {first_name}."
-- **Body:** "We're not judging it. We're not fixing it. We're just reflecting it back — so support can land properly."
+- **Body:** "We're not judging it. We're just naming it—so support can land properly."
 - **Dynamic List:**
   - Right now: {emotional_state label}
   - What weighs most: {primary_weight label}
@@ -389,15 +392,16 @@
   - Else if `gender` == `male` → `portrait_m.jpg`
   - Else if `gender` == `female` → `portrait_f.jpg`
   - Else → `portrait_neutral.jpg`
-- **Body:** "Someone who doesn't need fixing. Someone who just wants to feel supported."
+- **Fallback:** If no portrait image is available or fails to load, a neutral identity icon is shown instead of a blank placeholder.
+- **Body:** "This is who you are. Someone who doesn't need fixing. Someone who just wants steadier support."
 - **Button:** "Continue →"
 - **Next:** **Screen 29 (C7)**
 
 ### Screen 29 (C7): Alex Reveal
 - **Type:** `AlexRevealScreen`
 - **Headline:** "This is Alex."
-- **Subhead:** "Alex is your HugBot — a gentle AI companion built to support you emotionally."
-- **Body:** "Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders — based on what you said matters most."
+- **Subhead:** "Alex is built for moments like the ones you just described."
+- **Body:** "Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders—based on what you said actually helps."
 - **Button:** "Continue →"
 - **Next:** **Screen 30 (C8)**
 
@@ -423,6 +427,7 @@
 - **Type:** `PrimaryOfferScreen`
 - **Headline:** "Join Hug Society."
 - **Price/Body Line:** "Full access for a year. $97/year (about 27¢ a day)."
+- **Guarantee:** "30 days. If it's not a fit, just reply and we'll take care of it."
 - **Button:** "Join Hug Society — $97/year"
 - **Action:** On click:
   - Tags `dh_v2_hs_annual` in GHL
