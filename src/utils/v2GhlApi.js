@@ -2,6 +2,18 @@
 
 import { getOrCreateContact, addTagToContact, updateContactField } from './ghlApi';
 
+// Ensure a V2 contact exists for a given email (lead capture)
+export const ensureV2Contact = async (email) => {
+  if (!email) return null;
+  try {
+    const contact = await getOrCreateContact(email);
+    return contact || null;
+  } catch (error) {
+    console.error('Error ensuring V2 contact:', error);
+    return null;
+  }
+};
+
 // Tag a contact with V2 tag format
 export const tagV2Contact = async (email, tagKey, value) => {
   if (!email) {

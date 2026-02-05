@@ -19,6 +19,7 @@
 - **Type:** `V2EmailScreen`
 - **Action:** Email input + validation
 - **Data Captured:** `email`
+- **Backend:** Immediately ensures a V2 contact exists in GHL (`ensureV2Contact(email)`)
 - **Next:** **Screen 2**
 
 ### Screen 2: Emotional State
@@ -224,10 +225,15 @@
   - If "good for now" → `dh_v2_part1_complete_only`
 - **Data Captured:** `part2_entered` (boolean)
 
-### Screen 14.5: Graceful Exit (Part 1 Complete)
+### Screen 14.5: Gift Exit (The Honor + Daily Hug Exit)
 - **Type:** `GracefulExitScreen`
-- **Content:** "We hear you, {first_name}. No pressure. Ever. Your Daily Hug will arrive tomorrow morning. (You can pick your exact time in the welcome email.) And if you ever want more support… we'll be here. You're not doing this alone anymore. 💛"
-- **Action:** "Done →" button
+- **Headline:** "All good, {first_name}. 💛" (fallback: "All good, friend.")
+- **Body:** "Thanks for taking a moment to check in. You shared enough for us to start showing up in a way that actually fits. There’s nothing else you need to decide right now. Before you go, here’s today’s Hug — just for you."
+- **Personalized Hug Box:**
+  - "Hey {first_name},"
+  - "You don’t need to be certain. You don’t need to explain anything. The fact that you paused and checked in matters."
+  - "Whatever today brings, you’re not carrying it alone anymore. We’ll be here tomorrow. 💛"
+- **Action:** "See you tomorrow" button
 - **External URL:** `https://dailyhug.com` (redirects on click)
 - **Data Captured:** `completed_at` (timestamp)
 
@@ -235,7 +241,7 @@
 
 ## PART 2: Hug Society Deep Dive (Screens 14-22)
 
-> **Note:** Exit Intent Modal can appear on any Part 2 screen (14-35) if user attempts to leave (mouseleave or beforeunload event)
+> **Note:** If the user shows exit intent during Part 2 (mouseleave at top edge) on any screen 14–35 (except 14.5), the flow routes softly to Screen 14.5 (Gift Exit). No modal, no additional decisions.
 
 ### Screen 14: Part 2 Transition
 - **Type:** `AcknowledgmentScreen`
@@ -331,10 +337,13 @@
     - `managing` → "You're holding it together (barely)"
   - `primary_weight`
     - `loneliness` → "The weight of loneliness"
+    - `grief` → "The process of grief or loss"
     - `burnout` → "Burnout from being the 'strong' one"
+    - `pretending` → "The burden of pretending you're fine"
   - `hug_frequency`
     - `once` → "A daily check-in"
     - `2-3` → "Morning and evening support"
+    - `many` → "Maximum available support"
   - For any values not listed above, the UI falls back to the original option label text.
 - **Footer:** "Nothing added. Nothing interpreted."
 - **Button:** "Continue →"
@@ -455,7 +464,7 @@
 ## External URLs Summary
 
 1. **`https://dailyhug.com`**
-   - Screen 14.5 (Graceful Exit) - "Done →" button
+   - Screen 14.5 (Gift Exit) - "See you tomorrow" button
    - Screen 35 (C13 Exit) - "Done →" button
 
 2. **`https://dailyhug.com/order`**

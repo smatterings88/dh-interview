@@ -23,9 +23,8 @@ import {
   ValidationScreen,
   ExitScreen
 } from './components/v2/ClosingSequence';
-import ExitIntentModal from './components/v2/ExitIntentModal';
 import { initialUserData, getAcknowledgment, saveUserData, loadUserData, detectTimeZone } from './utils/v2Data';
-import { tagV2Contact, tagV2ContactMultiple, tagV2ForkDecision, tagV2PlanSelection, updateV2ContactFirstName } from './utils/v2GhlApi';
+import { tagV2Contact, tagV2ContactMultiple, tagV2ForkDecision, tagV2PlanSelection, updateV2ContactFirstName, ensureV2Contact } from './utils/v2GhlApi';
 import './App.css';
 
 // Screen definitions for Part 1 (Screens 1-13)
@@ -97,12 +96,14 @@ const RESULTS_LABELS = {
   },
   primary_weight: {
     loneliness: 'The weight of loneliness',
+    grief: 'The process of grief or loss',
     burnout: "Burnout from being the 'strong' one",
     pretending: "The burden of pretending you're fine"
   },
   hug_frequency: {
     once: 'A daily check-in',
-    '2-3': 'Morning and evening support'
+    '2-3': 'Morning and evening support',
+    many: 'Maximum available support'
   }
 };
 
@@ -169,7 +170,6 @@ function V2InterviewFlow() {
   const [currentScreen, setCurrentScreen] = useState(1);
   const [userData, setUserData] = useState(initialUserData);
   const [userEmail, setUserEmail] = useState('');
-  const [showExitIntent, setShowExitIntent] = useState(false);
   const [closingFadeClass, setClosingFadeClass] = useState('');
 
   // Load email from query param or localStorage on mount
@@ -247,12 +247,13 @@ function V2InterviewFlow() {
     }
   };
 
-  const handleEmailSubmit = (email) => {
+  const handleEmailSubmit = async (email) => {
     setUserEmail(email);
     const updated = { ...userData, email: email };
     setUserData(updated);
     saveUserData(updated);
     // Continue to screen 2 after email is collected
+    await ensureV2Contact(email);
     setCurrentScreen(2);
   };
 
@@ -600,40 +601,29 @@ function V2InterviewFlow() {
   };
 
   const handleC12Continue = () => {
-    setCurrentScreen(33); // C13
+    // 500ms fade “soft landing” into Exit Screen (C13)
+    setClosingFadeClass('fade-out');
+    setTimeout(() => {
+      setCurrentScreen(35);
+      setClosingFadeClass('fade-out');
+      requestAnimationFrame(() => {
+        setClosingFadeClass('fade-in');
+      });
+      setTimeout(() => setClosingFadeClass(''), 500);
+    }, 500);
   };
 
-  // Exit Intent Modal handlers
-  const handleExitIntentSendOne = () => {
-    setShowExitIntent(false);
-    // TODO: Send one Hug from Alex
-    console.log('Would send one Hug from Alex');
-  };
-
-  const handleExitIntentDismiss = () => {
-    setShowExitIntent(false);
-  };
-
-  // Exit intent detection for Part 2
+  // Gift Exit: on exit intent during Part 2, route to Screen 14.5 (Graceful Exit)
   useEffect(() => {
-    if (currentScreen >= 14 && currentScreen <= 35) {
-      const handleBeforeUnload = (e) => {
-        e.preventDefault();
-        e.returnValue = '';
-        setShowExitIntent(true);
-      };
-
+    if (currentScreen >= 14 && currentScreen <= 35 && currentScreen !== 14.5) {
       const handleMouseLeave = (e) => {
         if (e.clientY <= 0) {
-          setShowExitIntent(true);
+          setCurrentScreen(14.5);
         }
       };
 
-      window.addEventListener('beforeunload', handleBeforeUnload);
       document.addEventListener('mouseleave', handleMouseLeave);
-
       return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
         document.removeEventListener('mouseleave', handleMouseLeave);
       };
     }
@@ -1023,20 +1013,9 @@ function V2InterviewFlow() {
 
   return (
     <div
-      className={`App ${
-        closingFadeClass && (currentScreen === 23 || currentScreen === 24)
-          ? `fade-container ${closingFadeClass}`
-          : ''
-      }`}
+      className={`App ${closingFadeClass ? `fade-container ${closingFadeClass}` : ''}`}
     >
       {renderScreen()}
-      {showExitIntent && (
-        <ExitIntentModal
-          firstName={userData.first_name}
-          onSendOne={handleExitIntentSendOne}
-          onDismiss={handleExitIntentDismiss}
-        />
-      )}
       {/* Debug info - remove in production */}
       {process.env.NODE_ENV === 'development' && (
         <div style={{
