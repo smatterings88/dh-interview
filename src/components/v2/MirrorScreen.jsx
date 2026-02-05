@@ -1,31 +1,24 @@
 import './V2Screen.css';
 
-export default function MirrorScreen({ firstName, summary, subhead, onContinue }) {
-  const displayName = firstName || 'friend';
-  
+export default function MirrorScreen({ summary, onContinue }) {
   return (
     <div className="screen-container">
       <div className="screen-content">
         <h2 className="text-medium">
-          Here's what you told us, {displayName}.
+          Here's what you told us.
         </h2>
-        {subhead && (
-          <p className="mt-16" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
-            {subhead}
-          </p>
-        )}
+        <p className="mt-16" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
+          We're not judging it. We're not fixing it. We're just reflecting it back — so support can land properly.
+        </p>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           {typeof summary === 'string' ? <p>{summary}</p> : summary}
         </div>
-        <p className="mt-24" style={{ fontSize: '1.05rem' }}>
-          Does this feel accurate?
+        <p className="mt-24" style={{ fontSize: '1.05rem', fontStyle: 'italic', color: '#666' }}>
+          Nothing added. Nothing interpreted.
         </p>
-        <div className="question-options mt-24">
-          <button className="option-button" onClick={onContinue}>
-            Yes
-          </button>
-          <button className="option-button" onClick={onContinue}>
-            Close enough
+        <div className="mt-32">
+          <button className="btn-warm-neutral" onClick={onContinue}>
+            Continue →
           </button>
         </div>
       </div>

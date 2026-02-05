@@ -9,12 +9,23 @@ import TextInputScreen from './components/v2/TextInputScreen';
 import ForkScreen from './components/v2/ForkScreen';
 import GracefulExitScreen from './components/v2/GracefulExitScreen';
 import MirrorScreen from './components/v2/MirrorScreen';
-import OfferScreens from './components/v2/OfferScreens';
-import EmailPlanScreen from './components/v2/EmailPlanScreen';
-import ConfirmationScreen from './components/v2/ConfirmationScreen';
+import {
+  NormalizationScreen,
+  ReframeScreen,
+  BridgeScreen,
+  IdentityBridgeScreen,
+  VisualIdentityScreen,
+  AlexRevealScreen,
+  DeliverablesScreen,
+  ValueAnchorScreen,
+  PrimaryOfferScreen,
+  DownsellScreen,
+  ValidationScreen,
+  ExitScreen
+} from './components/v2/ClosingSequence';
 import ExitIntentModal from './components/v2/ExitIntentModal';
 import { initialUserData, getAcknowledgment, saveUserData, loadUserData, detectTimeZone } from './utils/v2Data';
-import { tagV2Contact, tagV2ContactMultiple, tagV2ForkDecision, tagV2PlanSelection, updateV2ContactFirstName, tagV2Part2Declined } from './utils/v2GhlApi';
+import { tagV2Contact, tagV2ContactMultiple, tagV2ForkDecision, tagV2PlanSelection, updateV2ContactFirstName } from './utils/v2GhlApi';
 import './App.css';
 
 // Screen definitions for Part 1 (Screens 1-13)
@@ -455,75 +466,99 @@ function V2InterviewFlow() {
     setCurrentScreen(23);
   };
 
+  // C1-C13 Closing Sequence Handlers
   const handleScreen23Continue = () => {
-    setCurrentScreen(24);
+    setCurrentScreen(24); // C2
   };
 
-  const handleScreen24Continue = () => {
-    setCurrentScreen(25);
+  const handleC2Continue = () => {
+    setCurrentScreen(25); // C3
   };
 
-  const handleScreen25Continue = () => {
-    setCurrentScreen(26);
+  const handleC3Continue = () => {
+    setCurrentScreen(26); // C4
   };
 
-  const handleScreen26Continue = () => {
-    setCurrentScreen(27);
+  const handleC4Continue = () => {
+    setCurrentScreen(27); // C5
   };
 
-  const handleScreen27Continue = () => {
-    setCurrentScreen(27.5);
+  const handleC5Continue = () => {
+    setCurrentScreen(28); // C6
   };
 
-  const handleSoftOffRampReady = () => {
-    setCurrentScreen(28);
+  const handleC6Continue = () => {
+    setCurrentScreen(29); // C7
   };
 
-  const handleSoftOffRampDecline = async () => {
+  const handleC7Continue = () => {
+    setCurrentScreen(30); // C8
+  };
+
+  const handleC8Continue = () => {
+    setCurrentScreen(31); // C9
+  };
+
+  const handleC9Continue = () => {
+    setCurrentScreen(32); // C10
+  };
+
+  const handleC10SelectAnnual = async () => {
     const newData = { 
       ...userData, 
+      plan_selected: 'annual',
       completed_at: new Date().toISOString()
     };
     setUserData(newData);
-    saveUserData(newData);
-
-    if (userEmail) {
-      await tagV2Part2Declined(userEmail);
-    }
-
-    window.location.href = 'https://dailyhug.com';
-  };
-
-  const handleScreen28Continue = () => {
-    setCurrentScreen(29);
-  };
-
-  const handleScreen29Continue = () => {
-    setCurrentScreen(30);
-  };
-
-  const handleScreen30Submit = async (email, plan) => {
-    const newData = { 
-      ...userData, 
-      email: email,
-      plan_selected: plan,
-      completed_at: new Date().toISOString()
-    };
-    setUserData(newData);
-    setUserEmail(email);
     saveUserData(newData);
     
-    // Tag plan selection in GHL
-    if (email) {
-      await tagV2PlanSelection(email, plan);
+    // Tag annual plan selection in GHL
+    if (userEmail) {
+      await tagV2PlanSelection(userEmail, 'annual');
     }
     
     // Redirect to checkout
-    const checkoutUrl = plan === 'annual'
-      ? 'https://dailyhug.com/order'
-      : 'https://dailyhug.com/order-monthly';
+    window.location.href = 'https://dailyhug.com/order';
+  };
+
+  const handleC11SelectMonthly = async () => {
+    const newData = { 
+      ...userData, 
+      plan_selected: 'monthly',
+      completed_at: new Date().toISOString()
+    };
+    setUserData(newData);
+    saveUserData(newData);
     
-    window.location.href = checkoutUrl;
+    // Tag monthly plan selection in GHL
+    if (userEmail) {
+      await tagV2PlanSelection(userEmail, 'monthly');
+    }
+    
+    // Redirect to checkout
+    window.location.href = 'https://dailyhug.com/order-monthly';
+  };
+
+  const handleC11SelectAnnual = async () => {
+    const newData = { 
+      ...userData, 
+      plan_selected: 'annual',
+      completed_at: new Date().toISOString()
+    };
+    setUserData(newData);
+    saveUserData(newData);
+    
+    // Tag annual plan selection in GHL
+    if (userEmail) {
+      await tagV2PlanSelection(userEmail, 'annual');
+    }
+    
+    // Redirect to checkout
+    window.location.href = 'https://dailyhug.com/order';
+  };
+
+  const handleC12Continue = () => {
+    setCurrentScreen(33); // C13
   };
 
   // Exit Intent Modal handlers
@@ -539,7 +574,7 @@ function V2InterviewFlow() {
 
   // Exit intent detection for Part 2
   useEffect(() => {
-    if (currentScreen >= 14 && currentScreen <= 30) {
+    if (currentScreen >= 14 && currentScreen <= 35) {
       const handleBeforeUnload = (e) => {
         e.preventDefault();
         e.returnValue = '';
@@ -843,7 +878,7 @@ function V2InterviewFlow() {
         );
       
       case 23:
-        // Build human-readable labels for mirror screen
+        // C1: The Mirror Logic (Reflection Screen)
         const mapValueToLabel = (options, value) =>
           options.find((opt) => opt.value === value)?.label || value || '—';
 
@@ -856,123 +891,74 @@ function V2InterviewFlow() {
             .map((val) => mapValueToLabel(SCREEN_19_OPTIONS, val))
             .join(', ') || '—';
 
-        const ageRangeLabel = userData.age_range
-          ? mapValueToLabel(SCREEN_12B_OPTIONS, userData.age_range)
-          : null;
-
         const summary = (
-          <ul className="feature-list">
+          <ul className="feature-list" style={{ listStyle: 'none', padding: 0 }}>
             <li>Right now: {emotionalStateLabel}</li>
-            <li>Heaviest weight: {primaryWeightLabel}</li>
-            <li>Support frequency: {frequencyLabel}</li>
-            <li>What lands best: {hugStylesLabels}</li>
-            {ageRangeLabel && <li>Life season: {ageRangeLabel}</li>}
+            <li>What weighs most: {primaryWeightLabel}</li>
+            <li>What helps you most: {hugStylesLabels}</li>
+            <li>How often support feels right: {frequencyLabel}</li>
           </ul>
         );
         
         return (
           <MirrorScreen
-            firstName={userData.first_name}
             summary={summary}
-            subhead="We're not judging it. We're just naming it—so support can land properly."
             onContinue={handleScreen23Continue}
           />
         );
       
       case 24:
-        return (
-          <OfferScreens
-            screenType="intro"
-            firstName={userData.first_name}
-            onContinue={handleScreen24Continue}
-          />
-        );
+        // C2: Gentle Normalization
+        return <NormalizationScreen onContinue={handleC2Continue} />;
       
       case 25:
-        return (
-          <OfferScreens
-            screenType="what_it_is"
-            firstName={userData.first_name}
-            onContinue={handleScreen25Continue}
-          />
-        );
+        // C3: The Reframe
+        return <ReframeScreen onContinue={handleC3Continue} />;
       
       case 26:
-        return (
-          <OfferScreens
-            screenType="transformation"
-            firstName={userData.first_name}
-            onContinue={handleScreen26Continue}
-          />
-        );
+        // C4: The Bridge
+        return <BridgeScreen onContinue={handleC4Continue} />;
       
       case 27:
-        return (
-          <OfferScreens
-            screenType="pricing"
-            firstName={userData.first_name}
-            onContinue={handleScreen27Continue}
-          />
-        );
+        // C5: Identity Bridge
+        return <IdentityBridgeScreen onContinue={handleC5Continue} />;
       
-      case 27.5:
-        return (
-          <div className="screen-container">
-            <div className="screen-content">
-              <h2 className="text-medium">Not ready to decide? That&apos;s okay.</h2>
-              <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
-                <p className="mb-16">
-                  If now isn&apos;t the moment, you&apos;ll still receive your Daily Hug.
-                </p>
-                <p>
-                  And you can come back to Hug Society anytime—
-                  when the &quot;one-a-day&quot; support stops being enough.
-                </p>
-              </div>
-              <div className="question-options mt-32">
-                <button className="btn-warm-neutral" onClick={handleSoftOffRampReady}>
-                  I&apos;m ready →
-                </button>
-                <button className="option-button" onClick={handleSoftOffRampDecline}>
-                  I&apos;ll stay with Daily Hug for now →
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-
       case 28:
-        return (
-          <OfferScreens
-            screenType="guarantee"
-            firstName={userData.first_name}
-            onContinue={handleScreen28Continue}
-          />
-        );
+        // C6: Visual Identity
+        return <VisualIdentityScreen onContinue={handleC6Continue} />;
       
       case 29:
-        return (
-          <OfferScreens
-            screenType="bonus"
-            firstName={userData.first_name}
-            onContinue={handleScreen29Continue}
-          />
-        );
+        // C7: Alex Reveal
+        return <AlexRevealScreen onContinue={handleC7Continue} />;
       
       case 30:
+        // C8: Concrete Deliverables
+        return <DeliverablesScreen onContinue={handleC8Continue} />;
+      
+      case 31:
+        // C9: Value Anchor
+        return <ValueAnchorScreen onContinue={handleC9Continue} />;
+      
+      case 32:
+        // C10: Primary Offer (Annual)
+        return <PrimaryOfferScreen onSelectAnnual={handleC10SelectAnnual} />;
+      
+      case 33:
+        // C11: Downsell (Monthly)
         return (
-          <EmailPlanScreen
-            firstName={userData.first_name}
-            onSubmit={handleScreen30Submit}
+          <DownsellScreen
+            onSelectMonthly={handleC11SelectMonthly}
+            onSelectAnnual={handleC11SelectAnnual}
           />
         );
       
-      case 31:
-        return (
-          <ConfirmationScreen
-            firstName={userData.first_name}
-          />
-        );
+      case 34:
+        // C12: Validation
+        return <ValidationScreen onContinue={handleC12Continue} />;
+      
+      case 35:
+        // C13: Exit
+        return <ExitScreen />;
       
       default:
         return <IntroScreen onContinue={handleScreen1Continue} />;
