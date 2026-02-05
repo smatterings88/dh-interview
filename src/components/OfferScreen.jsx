@@ -167,7 +167,7 @@ export default function OfferScreen({
                 // Tag in GHL first
                 await onJoin('annual');
                 // Then redirect to checkout
-                window.location.href = 'https://dailyhug.com/order';
+                window.location.href = 'https://dailyhug.com/join';
               }}
             >
               Let Hug Society support me — $97/year
@@ -215,7 +215,7 @@ export default function OfferScreen({
                 // Tag in GHL first
                 await onJoin('monthly');
                 // Then redirect to checkout
-                window.location.href = 'https://dailyhug.com/order-monthly';
+                window.location.href = 'https://dailyhug.com/join-monthly';
               }}
             >
               Try Hug Society — $15/month

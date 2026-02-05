@@ -100,7 +100,7 @@ export default function MonthlyOfferPage() {
                   console.error('Error tagging in GHL:', error);
                 }
               }
-              window.location.href = 'https://dailyhug.com/order-monthly';
+              window.location.href = 'https://dailyhug.com/join-monthly';
             }}
           >
             Start Hug Society — $15/month

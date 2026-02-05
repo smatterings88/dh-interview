@@ -518,7 +518,7 @@ function V2InterviewFlow() {
     }
     
     // Redirect to checkout
-    window.location.href = 'https://dailyhug.com/order';
+    window.location.href = 'https://dailyhug.com/join';
   };
 
   const handleC11SelectMonthly = async () => {
@@ -536,7 +536,7 @@ function V2InterviewFlow() {
     }
     
     // Redirect to checkout
-    window.location.href = 'https://dailyhug.com/order-monthly';
+    window.location.href = 'https://dailyhug.com/join-monthly';
   };
 
   const handleC11SelectAnnual = async () => {
@@ -554,7 +554,7 @@ function V2InterviewFlow() {
     }
     
     // Redirect to checkout
-    window.location.href = 'https://dailyhug.com/order';
+    window.location.href = 'https://dailyhug.com/join';
   };
 
   const handleC12Continue = () => {

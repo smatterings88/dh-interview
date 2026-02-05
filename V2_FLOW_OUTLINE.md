@@ -392,7 +392,7 @@
 - **Action:** On click:
   - Tags `dh_v2_hs_annual` in GHL
   - Sets `plan_selected = 'annual'` and `completed_at`
-  - Redirects to `https://dailyhug.com/order`
+  - Redirects to `https://dailyhug.com/join`
 
 ### Screen 33 (C11): Downsell (Monthly)
 - **Type:** `DownsellScreen`
@@ -402,11 +402,11 @@
   - "$15 / month" button → On click:
     - Tags `dh_v2_hs_monthly` in GHL
     - Sets `plan_selected = 'monthly'` and `completed_at`
-    - Redirects to `https://dailyhug.com/order-monthly`
+    - Redirects to `https://dailyhug.com/join-monthly`
   - "$97 / year (save $83)" button → On click:
     - Tags `dh_v2_hs_annual` in GHL
     - Sets `plan_selected = 'annual'` and `completed_at`
-    - Redirects to `https://dailyhug.com/order`
+    - Redirects to `https://dailyhug.com/join`
 - **Next:** (Only if user doesn't click either button - unlikely, but C12 is available)
 
 ### Screen 34 (C12): Validation
@@ -432,11 +432,11 @@
    - Screen 14.5 (Graceful Exit) - "Done →" button
    - Screen 35 (C13 Exit) - "Done →" button
 
-2. **`https://dailyhug.com/order`**
+2. **`https://dailyhug.com/join`**
    - Screen 32 (C10 Primary Offer) - "Join Hug Society →" button (annual plan)
    - Screen 33 (C11 Downsell) - "$97 / year (save $83)" button (annual plan)
 
-3. **`https://dailyhug.com/order-monthly`**
+3. **`https://dailyhug.com/join-monthly`**
    - Screen 33 (C11 Downsell) - "$15 / month" button (monthly plan)
 
 ---
