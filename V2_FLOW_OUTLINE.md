@@ -115,7 +115,7 @@
 - **Content:** "Yeah. Those moments are brutal. And the worst part? Most people have no idea you're even going through them. Because you've gotten really good at hiding it."
 - **Next:** **Screen 11.25**
 
-### Screen 11.25: The Diagnosis (NEW)
+### Screen 11.25: The Diagnosis
 - **Type:** `V2QuestionScreen` (Single-select)
 - **Title:** "Before we personalize anything… one honest reflection."
 - **Body:** "Most people who find The Daily Hug aren't in 'crisis.' They're just quietly carrying too much… for too long. They function. They handle things. They show up. But inside, there's a part of them that feels unheld."
@@ -229,9 +229,9 @@
 
 ---
 
-## PART 2: Hug Society Deep Dive (Screens 14-31)
+## PART 2: Hug Society Deep Dive (Screens 14-22)
 
-> **Note:** Exit Intent Modal can appear on any Part 2 screen (14-30) if user attempts to leave (mouseleave or beforeunload event)
+> **Note:** Exit Intent Modal can appear on any Part 2 screen (14-35) if user attempts to leave (mouseleave or beforeunload event)
 
 ### Screen 14: Part 2 Transition
 - **Type:** `AcknowledgmentScreen`
@@ -308,121 +308,121 @@
 - **Content:** Dynamic acknowledgment based on `chronotype`
 - **Next:** **Screen 23**
 
-### Screen 23: Your Results (Mirror Screen)
-- **Type:** `MirrorScreen`
-- **Headline:** "Here's what you told us, {first_name}."
-- **Subhead:** "We're not judging it. We're just naming it—so support can land properly."
-- **Content:** Bullet list showing:
-  - Right now: {emotional_state label}
-  - Heaviest weight: {primary_weight label}
-  - Support frequency: {hug_frequency label}
-  - What lands best: {hug_styles labels, comma-separated}
-  - Life season: {age_range label} (only if captured)
-- **Question:** "Does this feel accurate?"
-- **Options:**
-  - Yes
-  - Close enough
-- **Next:** **Screen 24**
-
-### Screen 24: Hug Society Inevitability Bridge
-- **Type:** `OfferScreens` (screenType="intro")
-- **Title:** "This is exactly what Hug Society is for."
-- **Body:** "{first_name}, what you just described is the gap most people live with: Support… but not when it actually hits. Hug Society is the 'more than once a day' layer—for the moments the Daily Hug can't fully cover on its own. No fixing. No pressure. Just steadier presence—morning, evening, and in-between."
-- **Button:** "Show me →"
-- **Next:** **Screen 25**
-
-### Screen 25: What It Is
-- **Type:** `OfferScreens` (screenType="what_it_is")
-- **Title:** "What It Is"
-- **Content:** List of Hug Society features:
-  - Daily personalized Hugs from Alex (your AI support companion)
-  - Access to a private community of people who get it
-  - Weekly group check-ins and support sessions
-  - Resources and tools for emotional wellness
-  - 24/7 access to Alex for when you need someone to talk to
-- **Button:** "Continue →"
-- **Next:** **Screen 26**
-
-### Screen 26: Transformation
-- **Type:** `OfferScreens` (screenType="transformation")
-- **Title:** "What Changes"
-- **Content:** List of transformations:
-  - ✓ You wake up knowing someone sees you
-  - ✓ You have a place to go when it gets heavy
-  - ✓ You're not alone in the 3am moments anymore
-  - ✓ You have support that's always there, never too busy
-  - ✓ You can finally let your guard down
-- **Button:** "Continue →"
-- **Next:** **Screen 27**
-
-### Screen 27: Pricing
-- **Type:** `OfferScreens` (screenType="pricing")
-- **Title:** "The Investment"
-- **Content:** "$97 per year or $15 per month. That's about 27¢ a day for real support."
-- **Button:** "Continue →"
-- **Next:** **Screen 27.5**
-
-### Screen 27.5: Soft Off-Ramp (NEW)
-- **Type:** Inline screen component
-- **Title:** "Not ready to decide? That's okay."
-- **Body:** "If now isn't the moment, you'll still receive your Daily Hug. And you can come back to Hug Society anytime—when the 'one-a-day' support stops being enough."
-- **Options:**
-  - "I'm ready →" → **Screen 28**
-  - "I'll stay with Daily Hug for now →" → **EXIT FLOW**
-- **Branch:**
-  - If "I'm ready" → **Screen 28**
-  - If "I'll stay with Daily Hug" → Tags `dh_v2_part2_declined`, sets `completed_at`, redirects to `https://dailyhug.com`
-
-### Screen 28: Guarantee
-- **Type:** `OfferScreens` (screenType="guarantee")
-- **Title:** "Our Promise"
-- **Content:** "We're so confident this will help that we offer a 30-day money-back guarantee. If it's not for you, we'll refund every penny. No questions asked. Because we're not here to take your money. We're here to make sure you're not doing this alone anymore."
-- **Button:** "Continue →"
-- **Next:** **Screen 29**
-
-### Screen 29: Bonus
-- **Type:** `OfferScreens` (screenType="bonus")
-- **Title:** "One More Thing"
-- **Content:** "If you join in the next 48 hours, you'll get founder bonuses: • Lifetime access to all future features (no extra cost) • Priority support and early access to new tools • Exclusive founder-only community events. This is our launch window. After 48 hours, these bonuses go away."
-- **Button:** "Continue →"
-- **Next:** **Screen 30**
-
-### Screen 30: Email & Plan Selection
-- **Type:** `EmailPlanScreen`
-- **Prompt:** "Alright, {first_name}. What's the best email to send your setup details?"
-- **Inputs:**
-  - Email address (required, validated)
-  - Plan selection (required):
-    - $97 / year (best value) → `plan = 'annual'`
-    - $15 / month → `plan = 'monthly'`
-- **Data Captured:** `email`, `plan_selected`
-- **GHL Tags:**
-  - If annual → `dh_v2_hs_annual`
-  - If monthly → `dh_v2_hs_monthly`
-- **Action:** "Yes — join The Hug Society →" button
-- **External URLs:**
-  - If annual → `https://dailyhug.com/order` (redirects on submit)
-  - If monthly → `https://dailyhug.com/order-monthly` (redirects on submit)
-- **Data Captured:** `completed_at` (timestamp)
-
-### Screen 31: Confirmation (Unreachable in current flow)
-- **Type:** `ConfirmationScreen`
-- **Content:** "You're in, {first_name}. 💛 Your setup details are on their way to your email. You'll get your first Hug tomorrow morning. Welcome to The Hug Society. We're glad you're here."
-- **Button:** "Done →"
-- **External URL:** `https://dailyhug.com` (redirects on click)
-- **Note:** This screen is defined but not currently reachable since Screen 30 redirects to checkout URLs
-
 ---
 
-## Exit Intent Modal (Part 2 Only)
+## CLOSING SEQUENCE: Steady Support & Continuity (Screens 23-35 / C1-C13)
 
-- **Trigger:** Appears on screens 14-30 if:
-  - User moves mouse to top of screen (mouseleave event with `clientY <= 0`)
-  - User attempts to close/refresh page (beforeunload event)
-- **Type:** `ExitIntentModal`
+### Screen 23 (C1): The Mirror Logic (Reflection)
+- **Type:** `MirrorScreen`
+- **Headline:** "Here's what you told us."
+- **Body:** "We're not judging it. We're not fixing it. We're just reflecting it back — so support can land properly."
+- **Dynamic List:**
+  - Right now: {emotional_state label}
+  - What weighs most: {primary_weight label}
+  - What helps you most: {hug_styles labels, comma-separated}
+  - How often support feels right: {hug_frequency label}
+- **Footer:** "Nothing added. Nothing interpreted."
+- **Button:** "Continue →"
+- **Next:** **Screen 24 (C2)**
+
+### Screen 24 (C2): Gentle Normalization
+- **Type:** `NormalizationScreen`
+- **Headline:** "That makes sense."
+- **Body:** "You don't need to be in crisis to want support. Sometimes people want it to stay steady. Sometimes to feel less alone. Sometimes just to hear, 'You're doing better than you think.' Whatever brought you here — it counts."
+- **Button:** "Continue →"
+- **Next:** **Screen 25 (C3)**
+
+### Screen 25 (C3): The Reframe
+- **Type:** `ReframeScreen`
+- **Headline:** "Nothing about this means something is 'wrong' with you."
+- **Body:** "It just means you're human... Some days take more effort. Some stretches of life ask for a little more support than others. That doesn't need fixing. It just deserves to be met."
+- **Button:** "Continue →"
+- **Next:** **Screen 26 (C4)**
+
+### Screen 26 (C4): The Bridge
+- **Type:** `BridgeScreen`
+- **Headline:** "When things feel like this, what actually helps?"
+- **Body:** "Not platitudes. Not being told to 'just think positive.'... What helps is support that matches you. That shows up without pressure."
+- **Button:** "Continue →"
+- **Next:** **Screen 27 (C5)**
+
+### Screen 27 (C5): Identity Bridge
+- **Type:** `IdentityBridgeScreen`
+- **Body:** "You're not looking for more content. You're looking for something steady... Before we show you what that looks like… there's someone we want you to meet."
+- **Button:** "Continue →"
+- **Next:** **Screen 28 (C6)**
+
+### Screen 28 (C6): Visual Identity
+- **Type:** `VisualIdentityScreen`
+- **Body:** "Someone who doesn't need fixing. Someone who just wants to feel supported."
+- **Button:** "Continue →"
+- **Next:** **Screen 29 (C7)**
+
+### Screen 29 (C7): Alex Reveal
+- **Type:** `AlexRevealScreen`
+- **Headline:** "This is Alex."
+- **Subhead:** "Alex is your HugBot — a gentle AI companion built to support you emotionally."
+- **Body:** "Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders — based on what you said matters most."
+- **Button:** "Continue →"
+- **Next:** **Screen 30 (C8)**
+
+### Screen 30 (C8): Concrete Deliverables
+- **Type:** `DeliverablesScreen`
+- **Content:** List of features:
+  - Personalized Hugs
+  - Morning/Evening options
+  - Flexible frequency
+  - Guided journaling tools
+- **Footer:** "No overwhelm. No pressure. Just steady support."
+- **Button:** "Continue →"
+- **Next:** **Screen 31 (C9)**
+
+### Screen 31 (C9): Value Anchor
+- **Type:** `ValueAnchorScreen`
+- **Headline:** "This isn't content. It's continuity."
+- **Body:** "It's knowing something steady shows up... Just to remind you — consistently — that you matter."
+- **Button:** "Continue →"
+- **Next:** **Screen 32 (C10)**
+
+### Screen 32 (C10): Primary Offer (Annual)
+- **Type:** `PrimaryOfferScreen`
+- **Headline:** "Join Hug Society."
+- **Price:** "$97 / year (That's about 27¢ a day.)"
+- **Button:** "Join Hug Society →"
+- **Action:** On click:
+  - Tags `dh_v2_hs_annual` in GHL
+  - Sets `plan_selected = 'annual'` and `completed_at`
+  - Redirects to `https://dailyhug.com/order`
+
+### Screen 33 (C11): Downsell (Monthly)
+- **Type:** `DownsellScreen`
+- **Headline:** "If a year feels like too much right now — that's okay."
+- **Body:** "You can start monthly instead. $15 per month. (That's $180/year if you stay — cancel anytime.) Or lock in the full year now at $97 and save $83."
 - **Options:**
-  - Send one Hug from Alex (TODO: not yet implemented)
-  - Dismiss (closes modal, continues flow)
+  - "$15 / month" button → On click:
+    - Tags `dh_v2_hs_monthly` in GHL
+    - Sets `plan_selected = 'monthly'` and `completed_at`
+    - Redirects to `https://dailyhug.com/order-monthly`
+  - "$97 / year (save $83)" button → On click:
+    - Tags `dh_v2_hs_annual` in GHL
+    - Sets `plan_selected = 'annual'` and `completed_at`
+    - Redirects to `https://dailyhug.com/order`
+- **Next:** (Only if user doesn't click either button - unlikely, but C12 is available)
+
+### Screen 34 (C12): Validation
+- **Type:** `ValidationScreen`
+- **Body:** "Whichever you choose… there's no 'right' decision here. Some people want consistency. Some want flexibility. Both are valid."
+- **Button:** "Continue →"
+- **Next:** **Screen 35 (C13)**
+- **Note:** This screen is typically bypassed if user selects a plan on C10 or C11
+
+### Screen 35 (C13): Exit
+- **Type:** `ExitScreen`
+- **Headline:** "You're welcome here."
+- **Body:** "Today. Next month. Or whenever you're ready. We'll meet you where you are."
+- **Button:** "Done →"
+- **External URL:** `https://dailyhug.com` (redirects on click)
+- **Note:** This screen is typically only reached if user navigates through C12 without selecting a plan
 
 ---
 
@@ -430,14 +430,14 @@
 
 1. **`https://dailyhug.com`**
    - Screen 14.5 (Graceful Exit) - "Done →" button
-   - Screen 27.5 (Soft Off-Ramp) - "I'll stay with Daily Hug for now →" button
-   - Screen 31 (Confirmation) - "Done →" button (unreachable)
+   - Screen 35 (C13 Exit) - "Done →" button
 
 2. **`https://dailyhug.com/order`**
-   - Screen 30 (Email & Plan Selection) - Redirects when annual plan selected
+   - Screen 32 (C10 Primary Offer) - "Join Hug Society →" button (annual plan)
+   - Screen 33 (C11 Downsell) - "$97 / year (save $83)" button (annual plan)
 
 3. **`https://dailyhug.com/order-monthly`**
-   - Screen 30 (Email & Plan Selection) - Redirects when monthly plan selected
+   - Screen 33 (C11 Downsell) - "$15 / month" button (monthly plan)
 
 ---
 
@@ -461,8 +461,8 @@
 15. `hug_frequency` (Screen 17)
 16. `hug_styles[]` (Screen 19, multi-select)
 17. `chronotype` (Screen 21)
-18. `plan_selected` (Screen 30)
-19. `completed_at` (Screen 14.5, 27.5, or 30)
+18. `plan_selected` (Screen 32 or 33)
+19. `completed_at` (Screen 14.5, 32, or 33)
 
 ### GHL Tag Prefix: `dh_v2_*`
 
@@ -471,15 +471,14 @@ All tags follow the pattern: `dh_v2_{questionKey}_{value}`
 Special tags:
 - `dh_v2_part2_entered` - User chose to go deeper (Screen 13)
 - `dh_v2_part1_complete_only` - User chose "good for now" (Screen 13)
-- `dh_v2_part2_declined` - User declined after pricing (Screen 27.5)
-- `dh_v2_hs_annual` - User selected annual plan (Screen 30)
-- `dh_v2_hs_monthly` - User selected monthly plan (Screen 30)
+- `dh_v2_hs_annual` - User selected annual plan (Screen 32 or 33)
+- `dh_v2_hs_monthly` - User selected monthly plan (Screen 33)
 
 ---
 
 ## Flow Summary
 
-**Total Screens:** 31 (plus conditional screens 1.5, 12.25, 12.75, 12.8, 14.5, 27.5)
+**Total Screens:** 35 (plus conditional screens 1.5, 12.25, 12.75, 12.8, 14.5)
 
 **Main Path:**
 1 → (1.5?) → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 11.25 → 11.5 → 12 → 12.5 → 12.6 → (12.25?) → 12.7 → (12.75?) → (12.8?) → 13 → [FORK]
@@ -488,10 +487,28 @@ Special tags:
 13 → 14.5 → EXIT (`https://dailyhug.com`)
 
 **Fork Path 2 (Part 2 Deep Dive):**
-13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 27.5 → [FORK]
+13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 (C1) → 24 (C2) → 25 (C3) → 26 (C4) → 27 (C5) → 28 (C6) → 29 (C7) → 30 (C8) → 31 (C9) → 32 (C10) → [CHECKOUT]
 
-**Fork Path 2a (Continue to Join):**
-27.5 → 28 → 29 → 30 → EXIT (checkout URLs)
+**Alternative Path 2 (After C10):**
+32 (C10) → 33 (C11) → [CHECKOUT] or → 34 (C12) → 35 (C13) → EXIT (`https://dailyhug.com`)
 
-**Fork Path 2b (Soft Off-Ramp):**
-27.5 → EXIT (`https://dailyhug.com`)
+---
+
+## Key Changes from Previous Version
+
+### Closing Sequence Refactor (Screens 23-35)
+- **Removed:** Old offer screens (24-31) with crisis-based language, soft off-ramp, guarantee, bonus screens
+- **Added:** New C1-C13 sequence focused on "Steady Support" and "Continuity"
+- **C1 (Screen 23):** Updated reflection screen with "Nothing added. Nothing interpreted" footer
+- **C2-C5:** Normalization, reframe, bridge, and identity bridge screens
+- **C6-C7:** Visual identity and Alex reveal (explicitly labeled as HugBot/AI)
+- **C8-C9:** Deliverables and value anchor
+- **C10-C11:** Simplified pricing flow (annual primary, monthly downsell)
+- **C12-C13:** Validation and exit screens
+
+### Style Guide Compliance
+- No crisis-based language
+- State-agnostic copy (works for "Thriving" and "Struggling")
+- Alex explicitly labeled as "HugBot — a gentle AI companion"
+- Clean, no-adjective language
+- No commentary or interpretation
