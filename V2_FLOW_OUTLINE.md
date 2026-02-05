@@ -118,7 +118,11 @@
 ### Screen 11.25: The Diagnosis
 - **Type:** `V2QuestionScreen` (Single-select)
 - **Title:** "Before we personalize anything… one honest reflection."
-- **Body:** "Most people who find The Daily Hug aren't in 'crisis.' They're just quietly carrying too much… for too long. They function. They handle things. They show up. But inside, there's a part of them that feels unheld."
+- **Body:**
+  - "Most people who find The Daily Hug aren’t in 'crisis.'"
+  - "They’re just quietly carrying too much… for too long."
+  - "They function. They handle things. They show up."
+  - "But inside, there’s a part of them that feels unheld."
 - **Question:** "Which one feels closest?"
 - **Options:**
   - Yes. That's me.
@@ -314,15 +318,27 @@
 
 ### Screen 23 (C1): The Mirror Logic (Reflection)
 - **Type:** `MirrorScreen`
-- **Headline:** "Here's what you told us."
+- **Headline:** "Here’s what you told us, {first_name}."
 - **Body:** "We're not judging it. We're not fixing it. We're just reflecting it back — so support can land properly."
 - **Dynamic List:**
   - Right now: {emotional_state label}
   - What weighs most: {primary_weight label}
   - What helps you most: {hug_styles labels, comma-separated}
   - How often support feels right: {hug_frequency label}
+- **Label Mapping Notes (Mirror):**
+  - `emotional_state`
+    - `struggling` → "Things have been rough lately"
+    - `managing` → "You're holding it together (barely)"
+  - `primary_weight`
+    - `loneliness` → "The weight of loneliness"
+    - `burnout` → "Burnout from being the 'strong' one"
+  - `hug_frequency`
+    - `once` → "A daily check-in"
+    - `2-3` → "Morning and evening support"
+  - For any values not listed above, the UI falls back to the original option label text.
 - **Footer:** "Nothing added. Nothing interpreted."
 - **Button:** "Continue →"
+- **Transition:** 500ms fade between C1 → C2
 - **Next:** **Screen 24 (C2)**
 
 ### Screen 24 (C2): Gentle Normalization
@@ -341,8 +357,13 @@
 
 ### Screen 26 (C4): The Bridge
 - **Type:** `BridgeScreen`
-- **Headline:** "When things feel like this, what actually helps?"
-- **Body:** "Not platitudes. Not being told to 'just think positive.'... What helps is support that matches you. That shows up without pressure."
+- **Headline:** "This is exactly what Hug Society is for."
+- **Body:**
+  - "{first_name}, what you just described is the gap most people live with:"
+  - "Support… but not when it actually hits."
+  - "Hug Society is the “more than once a day” layer — for the moments the Daily Hug can't fully cover on its own."
+  - "No fixing. No pressure."
+  - "Just steadier presence — morning, evening, and in-between."
 - **Button:** "Continue →"
 - **Next:** **Screen 27 (C5)**
 
@@ -354,6 +375,11 @@
 
 ### Screen 28 (C6): Visual Identity
 - **Type:** `VisualIdentityScreen`
+- **Dynamic Image Rules (Portrait):**
+  - If `age_range` == `65+` → `portrait_elder.jpg`
+  - Else if `gender` == `male` → `portrait_m.jpg`
+  - Else if `gender` == `female` → `portrait_f.jpg`
+  - Else → `portrait_neutral.jpg`
 - **Body:** "Someone who doesn't need fixing. Someone who just wants to feel supported."
 - **Button:** "Continue →"
 - **Next:** **Screen 29 (C7)**
@@ -387,8 +413,8 @@
 ### Screen 32 (C10): Primary Offer (Annual)
 - **Type:** `PrimaryOfferScreen`
 - **Headline:** "Join Hug Society."
-- **Price:** "$97 / year (That's about 27¢ a day.)"
-- **Button:** "Join Hug Society →"
+- **Price/Body Line:** "Full access for a year. $97/year (about 27¢ a day)."
+- **Button:** "Join Hug Society — $97/year"
 - **Action:** On click:
   - Tags `dh_v2_hs_annual` in GHL
   - Sets `plan_selected = 'annual'` and `completed_at`
@@ -399,11 +425,11 @@
 - **Headline:** "If a year feels like too much right now — that's okay."
 - **Body:** "You can start monthly instead. $15 per month. (That's $180/year if you stay — cancel anytime.) Or lock in the full year now at $97 and save $83."
 - **Options:**
-  - "$15 / month" button → On click:
+  - "Start Monthly — $15/month" button → On click:
     - Tags `dh_v2_hs_monthly` in GHL
     - Sets `plan_selected = 'monthly'` and `completed_at`
     - Redirects to `https://dailyhug.com/order-monthly?email={email}` (email param included when available)
-  - "$97 / year (save $83)" button → On click:
+  - "Join Hug Society — $97/year" button → On click:
     - Tags `dh_v2_hs_annual` in GHL
     - Sets `plan_selected = 'annual'` and `completed_at`
     - Redirects to `https://dailyhug.com/order?email={email}` (email param included when available)
@@ -433,11 +459,11 @@
    - Screen 35 (C13 Exit) - "Done →" button
 
 2. **`https://dailyhug.com/order`**
-   - Screen 32 (C10 Primary Offer) - "Join Hug Society →" button (annual plan)
+   - Screen 32 (C10 Primary Offer) - "Join Hug Society — $97/year" button (annual plan)
    - Screen 33 (C11 Downsell) - "$97 / year (save $83)" button (annual plan)
 
 3. **`https://dailyhug.com/order-monthly`**
-   - Screen 33 (C11 Downsell) - "$15 / month" button (monthly plan)
+   - Screen 33 (C11 Downsell) - "Start Monthly — $15/month" button (monthly plan)
 
 ---
 

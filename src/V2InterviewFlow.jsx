@@ -80,16 +80,13 @@ const SCREEN_11A_OPTIONS = [
   { value: 'unsure', label: 'I\'m not sure, but I\'m still here.' }
 ];
 
-const SCREEN_11A_PROMPT = `Before we personalize anything… one honest reflection.
-
-Most people who find The Daily Hug aren’t in 'crisis.'
-They’re just quietly carrying too much… for too long.
-
-They function. They handle things. They show up.
-
-But inside, there’s a part of them that feels unheld.
-
-Which one feels closest?`;
+const SCREEN_11A_TITLE = 'Before we personalize anything… one honest reflection.';
+const SCREEN_11A_BODY =
+  "Most people who find The Daily Hug aren’t in 'crisis.'\n" +
+  "They’re just quietly carrying too much… for too long.\n\n" +
+  'They function. They handle things. They show up.\n\n' +
+  "But inside, there’s a part of them that feels unheld.";
+const SCREEN_11A_QUESTION = 'Which one feels closest?';
 
 const RESULTS_LABELS = {
   emotional_state: {
@@ -102,6 +99,10 @@ const RESULTS_LABELS = {
     loneliness: 'The weight of loneliness',
     burnout: "Burnout from being the 'strong' one",
     pretending: "The burden of pretending you're fine"
+  },
+  hug_frequency: {
+    once: 'A daily check-in',
+    '2-3': 'Morning and evening support'
   }
 };
 
@@ -739,7 +740,9 @@ function V2InterviewFlow() {
       case 11.25:
         return (
           <V2QuestionScreen
-            prompt={SCREEN_11A_PROMPT}
+            title={SCREEN_11A_TITLE}
+            body={SCREEN_11A_BODY}
+            question={SCREEN_11A_QUESTION}
             options={SCREEN_11A_OPTIONS}
             onAnswer={handleScreen11AAnswer}
           />
@@ -934,7 +937,9 @@ function V2InterviewFlow() {
           '—';
 
         const frequencyLabel =
-          findOptionLabel(SCREEN_17_OPTIONS, userData.hug_frequency) || '—';
+          RESULTS_LABELS.hug_frequency[userData.hug_frequency] ||
+          findOptionLabel(SCREEN_17_OPTIONS, userData.hug_frequency) ||
+          '—';
 
         const hugStylesLabels = (userData.hug_styles || [])
           .map((val) => findOptionLabel(SCREEN_19_OPTIONS, val))
@@ -944,9 +949,9 @@ function V2InterviewFlow() {
         const summary = (
           <ul className="feature-list" style={{ listStyle: 'none', padding: 0 }}>
             <li>Right now: {emotionalStateLabel}</li>
-            <li>Heaviest weight: {primaryWeightLabel}</li>
-            <li>Support frequency: {frequencyLabel}</li>
-            <li>What lands best: {hugStylesLabels}</li>
+            <li>What weighs most: {primaryWeightLabel}</li>
+            <li>What helps you most: {hugStylesLabels}</li>
+            <li>How often support feels right: {frequencyLabel}</li>
           </ul>
         );
         
