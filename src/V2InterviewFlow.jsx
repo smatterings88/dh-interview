@@ -144,7 +144,7 @@ const SCREEN_17_OPTIONS = [
   { value: 'once', label: 'Once a day is enough' },
   { value: '2-3', label: '2–3 times (morning + evening)' },
   { value: '3-4', label: '3–4 times (I need more check-ins)' },
-  { value: 'many', label: 'As many as possible (I\'m going through it)' }
+  { value: 'many', label: 'Several check-ins a day (I\'m going through it)' }
 ];
 
 const SCREEN_19_OPTIONS = [
@@ -845,7 +845,7 @@ function V2InterviewFlow() {
       case 15:
         return (
           <V2QuestionScreen
-            prompt="Here's the thing about support: Most of us don't have enough of it. Or the support we do have shows up inconsistently. When they're available. Not when we need it. What if that changed? What if you had support that was: • Always there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
+            prompt="Here's the thing about support: Most of us don't have enough of it. Or the support we do have shows up inconsistently. When they're available. Not when we need it. What if that changed? What if you had support that was: • Reliably there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
             options={SCREEN_15_OPTIONS}
             onAnswer={handleScreen15Answer}
           />

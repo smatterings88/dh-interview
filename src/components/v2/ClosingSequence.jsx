@@ -225,7 +225,7 @@ export function PrimaryOfferScreen({ onSelectAnnual }) {
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>Full access for a year. $97/year (about 27¢ a day).</p>
           <p className="mt-8">
-            30 days. If it&apos;s not a fit, just reply and we&apos;ll take care of it.
+            30 days. If it&apos;s not a fit, just reply to any email and we&apos;ll take care of it. No awkward explanations. No hoops.
           </p>
         </div>
         <div className="mt-32">

@@ -253,7 +253,7 @@
 
 ### Screen 15: Support Desire
 - **Type:** `V2QuestionScreen` (Single-select)
-- **Prompt:** "Here's the thing about support: Most of us don't have enough of it. Or the support we do have shows up inconsistently. When they're available. Not when we need it. What if that changed? What if you had support that was: • Always there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
+- **Prompt:** "Here's the thing about support: Most of us don't have enough of it. Or the support we do have shows up inconsistently. When they're available. Not when we need it. What if that changed? What if you had support that was: • Reliably there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
 - **Options:**
   - Yes — that would change everything
   - I think so
@@ -274,7 +274,7 @@
   - Once a day is enough
   - 2–3 times (morning + evening)
   - 3–4 times (I need more check-ins)
-  - As many as possible (I'm going through it)
+  - Several check-ins a day (I'm going through it)
 - **Data Captured:** `hug_frequency`
 - **GHL Tag:** `dh_v2_hug_frequency_{value}`
 - **Next:** **Screen 18**
