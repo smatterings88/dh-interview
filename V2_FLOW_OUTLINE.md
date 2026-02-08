@@ -253,7 +253,7 @@
 
 ### Screen 15: Support Desire
 - **Type:** `V2QuestionScreen` (Single-select)
-- **Prompt:** "Here's the thing about support: Most of us don't have enough of it. Or the support we do have shows up inconsistently. When they're available. Not when we need it. What if that changed? What if you had support that was: • Reliably there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
+- **Prompt:** "What if reminders and check-ins worked like this instead — • Reliably there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
 - **Options:**
   - Yes — that would change everything
   - I think so
@@ -274,7 +274,7 @@
   - Once a day is enough
   - 2–3 times (morning + evening)
   - 3–4 times (I need more check-ins)
-  - Several check-ins a day (I'm going through it)
+  - Several check-ins a day (I want more reminders)
 - **Data Captured:** `hug_frequency`
 - **GHL Tag:** `dh_v2_hug_frequency_{value}`
 - **Next:** **Screen 18**
@@ -374,8 +374,6 @@
   - "{first_name}, what you just described is the gap most people live with:"
   - "Support… but not when it actually hits."
   - "Hug Society is the “more than once a day” layer — for the moments the Daily Hug can't fully cover on its own."
-  - "No fixing. No pressure."
-  - "Just steadier presence — morning, evening, and in-between."
 - **Button:** "Continue →"
 - **Next:** **Screen 27 (C5)**
 
@@ -393,14 +391,14 @@
   - Else if `gender` == `female` → `portrait_f.jpg`
   - Else → `portrait_neutral.jpg`
 - **Fallback:** If no portrait image is available or fails to load, a neutral identity icon is shown instead of a blank placeholder.
-- **Body:** "This is who you are. Someone who doesn't need fixing. Someone who just wants steadier support."
+- **Body:** "This is who you are. Someone who doesn't need fixing — just steadier support when life gets heavy."
 - **Button:** "Continue →"
 - **Next:** **Screen 29 (C7)**
 
 ### Screen 29 (C7): Alex Reveal
 - **Type:** `AlexRevealScreen`
 - **Headline:** "This is Alex."
-- **Subhead:** "Alex is built for moments like the ones you just described."
+- **Subhead:** "Alex is designed to deliver what you said helps — consistently."
 - **Body:** "Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders—based on what you said actually helps."
 - **Button:** "Continue →"
 - **Next:** **Screen 30 (C8)**
@@ -419,7 +417,7 @@
 ### Screen 31 (C9): Value Anchor
 - **Type:** `ValueAnchorScreen`
 - **Headline:** "This isn't content. It's continuity."
-- **Body:** "It's knowing something steady shows up... Just to remind you — consistently — that you matter."
+- **Body:** "It's knowing a steady signal shows up — without you having to ask for it."
 - **Button:** "Continue →"
 - **Next:** **Screen 32 (C10)**
 

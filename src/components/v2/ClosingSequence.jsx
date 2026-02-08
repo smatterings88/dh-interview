@@ -53,7 +53,7 @@ export function BridgeScreen({ firstName, onContinue }) {
         <h2 className="text-medium">This is exactly what Hug Society is for.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            {displayName}, what you just described is the gap most people live with: Support… but not when it actually hits. Hug Society is the &quot;more than once a day&quot; layer—for the moments the Daily Hug can&apos;t fully cover on its own. No fixing. No pressure. Just steadier presence—morning, evening, and in-between.
+            {displayName}, what you just described is the gap most people live with: Support… but not when it actually hits. Hug Society is the &quot;more than once a day&quot; layer—for the moments the Daily Hug can&apos;t fully cover on its own.
           </p>
         </div>
         <div className="mt-32">
@@ -152,7 +152,7 @@ export function AlexRevealScreen({ onContinue }) {
       <div className="screen-content">
         <h2 className="text-medium">This is Alex.</h2>
         <h3 className="mt-16" style={{ fontSize: '1.1rem', fontWeight: 500 }}>
-          Alex is built for moments like the ones you just described.
+          Alex is designed to deliver what you said helps — consistently.
         </h3>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
@@ -203,7 +203,7 @@ export function ValueAnchorScreen({ onContinue }) {
         <h2 className="text-medium">This isn't content. It's continuity.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            It's knowing something steady shows up... Just to remind you — consistently — that you matter.
+            It&apos;s knowing a steady signal shows up — without you having to ask for it.
           </p>
         </div>
         <div className="mt-32">
