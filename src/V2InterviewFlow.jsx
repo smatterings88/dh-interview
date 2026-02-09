@@ -453,6 +453,7 @@ function V2InterviewFlow() {
       await tagV2Contact(userEmail, 'chose_depth', 'false');
     }
     
+    setUserData((prev) => ({ ...prev, source: 'fork_choice' }));
     setCurrentScreen(14.5); // 14B - Graceful Exit
   };
 
@@ -615,11 +616,12 @@ function V2InterviewFlow() {
     }, 500);
   };
 
-  // Gift Exit: on exit intent during Part 2, route to Screen 14.5 (Graceful Exit)
+  // Gift Exit: on exit intent during Part 2, route to Screen 14.5 only up to C9 (Screen 31). Disabled on C10+ to protect checkout.
   useEffect(() => {
-    if (currentScreen >= 14 && currentScreen <= 35 && currentScreen !== 14.5) {
+    if (currentScreen >= 14 && currentScreen < 32 && currentScreen !== 14.5) {
       const handleMouseLeave = (e) => {
         if (e.clientY <= 0) {
+          setUserData((prev) => ({ ...prev, source: 'exit_intent' }));
           setCurrentScreen(14.5);
         }
       };
@@ -696,7 +698,7 @@ function V2InterviewFlow() {
       case 8:
         return (
           <V2QuestionScreen
-            prompt="You know what no one talks about? The 3am moments. When everyone else is asleep. When you can't text anyone. When you're stuck in your own head with no one to pull you out. Have you been there?"
+            prompt="You know what no one talks about? The 3am moments. When everyone else is asleep. When it feels harder to reach out — even if people exist. When you're in your own head and just need a consistent signal to pull you out. Have you been there?"
             options={SCREEN_8_OPTIONS}
             onAnswer={handleScreen8Answer}
           />
@@ -724,7 +726,7 @@ function V2InterviewFlow() {
       case 11:
         return (
           <AcknowledgmentScreen
-            copy="Yeah. Those moments are brutal. And the worst part? Most people have no idea you're even going through them. Because you've gotten really good at hiding it."
+            copy="Those moments show up for more people than anyone admits. Even when life looks 'fine' on the outside, having a reliable way to navigate them makes all the difference."
             onContinue={handleScreen11Continue}
           />
         );
@@ -771,7 +773,7 @@ function V2InterviewFlow() {
       case 12.6:
         return (
           <V2QuestionScreen
-            prompt="One more: How do you identify? We're asking so Alex can speak to you in a way that feels right — not to put you in a box."
+            prompt="One more: How do you identify? We're asking so Alex can avoid language that feels off — not to put you in a box."
             options={SCREEN_12C_OPTIONS}
             onAnswer={handleScreen12CAnswer}
           />

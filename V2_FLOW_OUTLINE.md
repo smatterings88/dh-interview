@@ -80,7 +80,7 @@
 
 ### Screen 8: 3am Moments
 - **Type:** `V2QuestionScreen` (Single-select)
-- **Prompt:** "You know what no one talks about? The 3am moments. When everyone else is asleep. When you can't text anyone. When you're stuck in your own head with no one to pull you out. Have you been there?"
+- **Prompt:** "You know what no one talks about? The 3am moments. When everyone else is asleep. When it feels harder to reach out — even if people exist. When you're in your own head and just need a consistent signal to pull you out. Have you been there?"
 - **Options:**
   - Yes, more times than I want to admit
   - I'm there right now
@@ -113,7 +113,7 @@
 
 ### Screen 11: Acknowledgment (Relatable Moments)
 - **Type:** `AcknowledgmentScreen`
-- **Content:** "Yeah. Those moments are brutal. And the worst part? Most people have no idea you're even going through them. Because you've gotten really good at hiding it."
+- **Content:** "Those moments show up for more people than anyone admits. Even when life looks 'fine' on the outside, having a reliable way to navigate them makes all the difference."
 - **Next:** **Screen 11.25**
 
 ### Screen 11.25: Shared Pattern
@@ -163,7 +163,7 @@
 
 ### Screen 12.6: Gender Identity
 - **Type:** `V2QuestionScreen` (Single-select)
-- **Prompt:** "One more: How do you identify? We're asking so Alex can speak to you in a way that feels right — not to put you in a box."
+- **Prompt:** "One more: How do you identify? We're asking so Alex can avoid language that feels off — not to put you in a box."
 - **Options:**
   - Male
   - Female
@@ -235,7 +235,7 @@
   - "Whatever today looks like for you, you’re not doing it alone anymore. We’ll be back tomorrow. 💛"
 - **Action:** "👉 See you tomorrow" button
 - **External URL:** `https://dailyhug.com` (redirects on click)
-- **Data Captured:** `completed_at` (timestamp)
+- **Data Captured:** `completed_at` (timestamp), `source` (`fork_choice` | `exit_intent` for analytics)
  - **GHL Tags (off-ramp):**
    - `dh_v2_daily_hug_subscriber_true`
    - `dh_v2_chose_depth_false`
@@ -244,7 +244,7 @@
 
 ## PART 2: Hug Society Deep Dive (Screens 14-22)
 
-> **Note:** If the user shows exit intent during Part 2 (mouseleave at top edge) on any screen 14–35 (except 14.5), the flow routes softly to Screen 14.5 (Gift Exit). No modal, no additional decisions.
+> **Note:** Exit-intent (mouseleave at top edge) routes to Screen 14.5 only on screens 14–31 (through C9). **Disabled on Screen 32 (C10) and all subsequent offer/checkout screens** to protect funnel. When user reaches 14.5, `source` is set: `fork_choice` (clicked "I'm good for now" on 13) or `exit_intent` (routed via mouseleave).
 
 ### Screen 14: Part 2 Transition
 - **Type:** `AcknowledgmentScreen`
@@ -504,6 +504,7 @@
 17. `chronotype` (Screen 21)
 18. `plan_selected` (Screen 32 or 33)
 19. `completed_at` (Screen 14.5, 32, or 33)
+20. `source` (Screen 14.5 only: `fork_choice` | `exit_intent`)
 
 ### GHL Tag Prefix: `dh_v2_*`
 

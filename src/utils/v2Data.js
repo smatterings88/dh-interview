@@ -28,7 +28,9 @@ export const initialUserData = {
   // Meta
   interview_version: 'v2',
   started_at: new Date().toISOString(),
-  completed_at: null
+  completed_at: null,
+  // Analytics: set when user reaches Screen 14.5 (Gift Exit) — 'fork_choice' | 'exit_intent'
+  source: ''
 };
 
 // Dynamic acknowledgments map
