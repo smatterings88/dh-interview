@@ -253,7 +253,9 @@
 
 ### Screen 15: Support Desire
 - **Type:** `V2QuestionScreen` (Single-select)
-- **Prompt:** "What if reminders and check-ins worked like this instead — • Reliably there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
+- **Prompt:** "What if reminders and check-ins worked like this instead —"
+- **Bullet List (UI):** Reliably there • Never too busy • Never judging you • Never making you feel like a burden
+- **Question:** "Would that matter to you?"
 - **Options:**
   - Yes — that would change everything
   - I think so
@@ -264,7 +266,7 @@
 
 ### Screen 16: Acknowledgment (Support Desire)
 - **Type:** `AcknowledgmentScreen`
-- **Content:** "Yeah. Most people don't realize how much steady support matters… Until they actually have it. It changes everything."
+- **Content:** "Yeah. Most people don't realize how much consistent support matters… Until they actually have it. It changes everything."
 - **Next:** **Screen 17**
 
 ### Screen 17: Hug Frequency
@@ -391,7 +393,7 @@
   - Else if `gender` == `female` → `portrait_f.jpg`
   - Else → `portrait_neutral.jpg`
 - **Fallback:** If no portrait image is available or fails to load, a neutral identity icon is shown instead of a blank placeholder.
-- **Body:** "This is who you are. Someone who doesn't need fixing — just steadier support when life gets heavy."
+- **Body:** "This is who you are. Someone who doesn't need fixing — just consistent support when it helps."
 - **Button:** "Continue →"
 - **Next:** **Screen 29 (C7)**
 
@@ -399,7 +401,8 @@
 - **Type:** `AlexRevealScreen`
 - **Headline:** "This is Alex."
 - **Subhead:** "Alex is designed to deliver what you said helps — consistently."
-- **Body:** "Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders—based on what you said actually helps."
+- **Body:** "Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you consistent reminders—based on what you said actually helps."
+- **Mechanics line:** "Based on your answers, Alex schedules and delivers reminders automatically — you don't have to initiate anything."
 - **Button:** "Continue →"
 - **Next:** **Screen 30 (C8)**
 
@@ -410,14 +413,14 @@
   - Morning/Evening options
   - Flexible frequency
   - Guided journaling tools
-- **Footer:** "No overwhelm. No pressure. Just steady support."
+- **Footer:** "No overwhelm. No pressure. Just consistent support."
 - **Button:** "Continue →"
 - **Next:** **Screen 31 (C9)**
 
 ### Screen 31 (C9): Value Anchor
 - **Type:** `ValueAnchorScreen`
 - **Headline:** "This isn't content. It's continuity."
-- **Body:** "It's knowing a steady signal shows up — without you having to ask for it."
+- **Body:** "It's knowing a consistent signal shows up — without you having to ask for it."
 - **Button:** "Continue →"
 - **Next:** **Screen 32 (C10)**
 

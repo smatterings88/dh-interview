@@ -9,7 +9,7 @@ export function NormalizationScreen({ onContinue }) {
         <h2 className="text-medium">That makes sense.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            You don't need to be in crisis to want support. Sometimes people want it to stay steady. Sometimes to feel less alone. Sometimes just to hear, "You're doing better than you think." Whatever brought you here — it counts.
+            You don't need to be in crisis to want support. Sometimes people want it to stay consistent. Sometimes to feel less alone. Sometimes just to hear, "You're doing better than you think." Whatever brought you here — it counts.
           </p>
         </div>
         <div className="mt-32">
@@ -73,7 +73,7 @@ export function IdentityBridgeScreen({ onContinue }) {
       <div className="screen-content">
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            You're not looking for more content. You're looking for something steady... Before we show you what that looks like… there's someone we want you to meet.
+            You're not looking for more content. You're looking for something consistent... Before we show you what that looks like… there's someone we want you to meet.
           </p>
         </div>
         <div className="mt-32">
@@ -132,7 +132,7 @@ export function VisualIdentityScreen({ portraitSrc, onContinue }) {
         </div>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            This is who you are. Someone who doesn&apos;t need fixing — just steadier support when life gets heavy.
+            This is who you are. Someone who doesn&apos;t need fixing — just consistent support when it helps.
           </p>
         </div>
         <div className="mt-32">
@@ -156,7 +156,10 @@ export function AlexRevealScreen({ onContinue }) {
         </h3>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you steady reminders—based on what you said actually helps.
+            Alex isn't a therapist. Alex doesn't diagnose or fix you. Alex sends you consistent reminders—based on what you said actually helps.
+          </p>
+          <p className="mt-16">
+            Based on your answers, Alex schedules and delivers reminders automatically — you don&apos;t have to initiate anything.
           </p>
         </div>
         <div className="mt-32">
@@ -182,7 +185,7 @@ export function DeliverablesScreen({ onContinue }) {
             <li>Guided journaling tools</li>
           </ul>
           <p className="mt-24" style={{ fontStyle: 'italic', color: '#666' }}>
-            No overwhelm. No pressure. Just steady support.
+            No overwhelm. No pressure. Just consistent support.
           </p>
         </div>
         <div className="mt-32">
@@ -203,7 +206,7 @@ export function ValueAnchorScreen({ onContinue }) {
         <h2 className="text-medium">This isn't content. It's continuity.</h2>
         <div className="mt-24" style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
           <p>
-            It&apos;s knowing a steady signal shows up — without you having to ask for it.
+            It&apos;s knowing a consistent signal shows up — without you having to ask for it.
           </p>
         </div>
         <div className="mt-32">

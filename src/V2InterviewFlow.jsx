@@ -845,7 +845,16 @@ function V2InterviewFlow() {
       case 15:
         return (
           <V2QuestionScreen
-            prompt="What if reminders and check-ins worked like this instead — • Reliably there • Never too busy • Never judging you • Never making you feel like a burden. Would that matter to you?"
+            prompt="What if reminders and check-ins worked like this instead —"
+            body={
+              <ul className="mt-16" style={{ fontSize: '1.05rem', lineHeight: '1.7', listStyle: 'disc', paddingLeft: '1.25rem' }}>
+                <li>Reliably there</li>
+                <li>Never too busy</li>
+                <li>Never judging you</li>
+                <li>Never making you feel like a burden</li>
+              </ul>
+            }
+            question="Would that matter to you?"
             options={SCREEN_15_OPTIONS}
             onAnswer={handleScreen15Answer}
           />
@@ -854,7 +863,7 @@ function V2InterviewFlow() {
       case 16:
         return (
           <AcknowledgmentScreen
-            copy="Yeah. Most people don't realize how much steady support matters… Until they actually have it. It changes everything."
+            copy="Yeah. Most people don't realize how much consistent support matters… Until they actually have it. It changes everything."
             onContinue={handleScreen16Continue}
           />
         );
